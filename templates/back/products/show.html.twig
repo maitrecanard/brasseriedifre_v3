@@ -1,0 +1,54 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+    <h1>{{ product.name }}</h1>
+    <div style="display:flex;justify-content:space-between;">
+  <a class="btn btn-light" href="{{ path('app_back_products_index') }}">Retour à la liste</a>
+ 
+    <a class="btn btn-outline-secondary" href="{{ path('app_back_products_edit', {'id': product.id}) }}">Modifier</a>
+    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Sous titre</th>
+                <td>{{ product.subtitle }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('assets/content/picture')}}{{ product.picture }}"></td>
+            </tr>
+            <tr>
+                <th>Alcool</th>
+                <td>{{ product.degre }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ product.content }}</td>
+            </tr>
+            <tr>
+                <th>Publié</th>
+                <td>{{ product.active ? '<span class="text-success">Oui</span>' : '<span class="text-danger">Non</span>' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}
