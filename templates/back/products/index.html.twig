@@ -1,0 +1,43 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Products index{% endblock %}
+
+{% block body %}
+    <h1>Tous les produits</h1>
+    <a class="btn btn-light" href="{{ path('app_back_products_new') }}">Create new</a>
+    <table class="table">
+        <thead style="position:static; top:0;">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+
+                <th>Picture</th>
+
+                <th>Publié</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+
+                <td><img src="{{ asset('assets/content/pictures/')}}{{ product.picture }}"></td>
+
+                <td>{{ product.active ? '<span class="btn btn-outline-success">Oui</span>' : '<span class="btn btn-outline-danger">Non</span>' }}</td>
+                <td>
+                    <a class="btn btn-outline-info" href="{{ path('app_back_products_show', {'id': product.id}) }}">Aperçu</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_back_products_edit', {'id': product.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
