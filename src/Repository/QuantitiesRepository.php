@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\QuantityPrix;
+use App\Entity\Quantities;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<QuantityPrix>
+ * @extends ServiceEntityRepository<Quantities>
  *
- * @method QuantityPrix|null find($id, $lockMode = null, $lockVersion = null)
- * @method QuantityPrix|null findOneBy(array $criteria, array $orderBy = null)
- * @method QuantityPrix[]    findAll()
- * @method QuantityPrix[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Quantities|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Quantities|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Quantities[]    findAll()
+ * @method Quantities[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class QuantityPrixRepository extends ServiceEntityRepository
+class QuantitiesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, QuantityPrix::class);
+        parent::__construct($registry, Quantities::class);
     }
 
-    public function add(QuantityPrix $entity, bool $flush = false): void
+    public function add(Quantities $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class QuantityPrixRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(QuantityPrix $entity, bool $flush = false): void
+    public function remove(Quantities $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class QuantityPrixRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return QuantityPrix[] Returns an array of QuantityPrix objects
+//     * @return Quantities[] Returns an array of Quantities objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class QuantityPrixRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?QuantityPrix
+//    public function findOneBySomeField($value): ?Quantities
 //    {
 //        return $this->createQueryBuilder('q')
 //            ->andWhere('q.exampleField = :val')
