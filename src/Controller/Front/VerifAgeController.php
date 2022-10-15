@@ -45,9 +45,7 @@ class VerifAgeController extends AbstractController
                  $session->set('age', true);
                  return $this->redirectToRoute('home', [], Response::HTTP_FOUND);
             }
-
-
-          
+ 
         }
 
         return $this->renderForm('front/verif_age/index.html.twig', []);

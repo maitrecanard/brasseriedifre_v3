@@ -1,0 +1,45 @@
+{% extends 'back/back_base.html.twig' %}
+
+{% block title %}Categories index{% endblock %}
+
+{% block body %}
+       <h1 class="h3 mb-0 text-gray-800">Toute les catégories</h1>
+     </div>
+    <a href="{{ path('app_back_products_new') }}" class="btn btn-success btn-icon-split mb-4">
+        <span class="icon text-white-50">
+            <i class="fas fa-check"></i>
+        </span>
+        <span class="text">Nouveau produit</span>
+    </a>
+    <div class="card shadow mb-4">
+                   
+        <div class="card-body">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>
+                    <a href="{{ path('app_back_categories_show', {'id': category.id}) }}">show</a>
+                    <a href="{{ path('app_back_categories_edit', {'id': category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+{% endblock %}
