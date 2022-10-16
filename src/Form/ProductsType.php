@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Products;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -24,12 +25,13 @@ class ProductsType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
             ])
-            ->add('picture', FileType::class, [
+            /*->add('picture', FileType::class, [
                 'label' => 'Image du produit',
                 [
                     'data_class' => null
                 ]
-            ])
+            ])*/
+            ->add('quantities', EntityType::class)
             ->add('degre', NumberType::class, [
                 'label' => 'Alcool' 
             ])
