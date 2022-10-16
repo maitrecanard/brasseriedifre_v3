@@ -28,8 +28,19 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>
-                    <a href="{{ path('app_back_categories_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_back_categories_edit', {'id': category.id}) }}">edit</a>
+                    
+                    <a href="{{ path('app_back_categories_show', {'id': category.id}) }}" class="btn btn-info btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                        <span class="text">Afficher</span>
+                                    </a>
+                        <a href="{{ path('app_back_categories_edit', {'id': category.id}) }}" class="btn btn-warning btn-icon-split">
+                                        <span class="icon text-white-50">
+                                           <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">Editer</span>
+                                    </a>
                 </td>
             </tr>
         {% else %}
