@@ -25,6 +25,10 @@ class HistoricMovement
     #[ORM\ManyToOne(inversedBy: 'historicMovements')]
     private ?Categories $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'historicMovements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +78,18 @@ class HistoricMovement
     public function setCategory(?Categories $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

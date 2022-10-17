@@ -52,6 +52,14 @@ class Products
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HistoricMovement::class)]
     private Collection $historicMovements;
 
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categories $categories = null;
+
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categories $categorie = null;
+
 
     public function __construct()
     {
@@ -226,6 +234,17 @@ class Products
         return $this;
     }
 
+    public function getCategorie(): ?Categories
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
 
 
 }

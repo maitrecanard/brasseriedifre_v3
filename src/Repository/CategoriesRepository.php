@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Categories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\HistoricMovementRepository;
 
 /**
  * @extends ServiceEntityRepository<Categories>
@@ -16,9 +17,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoriesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    protected $productRepository;
+
+
+    public function __construct(ManagerRegistry $registry, HistoricMovementRepository $historicMovementRepository)
     {
         parent::__construct($registry, Categories::class);
+        $this->historicMovementRepository = $historicMovementRepository;
     }
 
     public function add(Categories $entity, bool $flush = false): void
@@ -32,6 +37,22 @@ class CategoriesRepository extends ServiceEntityRepository
 
     public function remove(Categories $entity, bool $flush = false): void
     {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function removeCategoryHistoric(Categories $entity, bool $flush = false): void
+    {
+    
+        $historical = $this->historicMovementRepository->findBy(['category' => $entity]);
+
+        foreach($historical as $historic) {
+            $this->getEntityManager()->remove($historic);
+        }
+
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
