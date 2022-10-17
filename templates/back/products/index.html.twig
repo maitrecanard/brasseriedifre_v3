@@ -5,13 +5,17 @@
 {% block body %}
     <h1 class="h3 mb-0 text-gray-800">Tous les produits</h1>
      </div>
-    <a href="{{ path('app_back_products_new') }}" class="btn btn-success btn-icon-split">
+    <a href="{{ path('app_back_products_new') }}" class="btn btn-success btn-icon-split mb-4">
         <span class="icon text-white-50">
             <i class="fas fa-check"></i>
         </span>
         <span class="text">Nouveau produit</span>
     </a>
-    <table class="table">
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+        <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead style="position:static; top:0;">
             <tr>
                 <th>Référence</th>
@@ -43,6 +47,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    
+</div>
+</div>
 {% endblock %}
