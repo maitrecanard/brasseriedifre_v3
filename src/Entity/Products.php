@@ -49,10 +49,14 @@ class Products
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HistoricMovement::class)]
+    private Collection $historicMovements;
+
 
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
+        $this->historicMovements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +192,36 @@ class Products
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoricMovement>
+     */
+    public function getHistoricMovements(): Collection
+    {
+        return $this->historicMovements;
+    }
+
+    public function addHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if (!$this->historicMovements->contains($historicMovement)) {
+            $this->historicMovements->add($historicMovement);
+            $historicMovement->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if ($this->historicMovements->removeElement($historicMovement)) {
+            // set the owning side to null (unless already changed)
+            if ($historicMovement->getProduct() === $this) {
+                $historicMovement->setProduct(null);
+            }
+        }
 
         return $this;
     }

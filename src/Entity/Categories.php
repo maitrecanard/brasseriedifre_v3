@@ -21,9 +21,13 @@ class Categories
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Products::class, orphanRemoval: true)]
     private Collection $products;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: HistoricMovement::class)]
+    private Collection $historicMovements;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->historicMovements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Categories
             // set the owning side to null (unless already changed)
             if ($product->getCategorie() === $this) {
                 $product->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoricMovement>
+     */
+    public function getHistoricMovements(): Collection
+    {
+        return $this->historicMovements;
+    }
+
+    public function addHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if (!$this->historicMovements->contains($historicMovement)) {
+            $this->historicMovements->add($historicMovement);
+            $historicMovement->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if ($this->historicMovements->removeElement($historicMovement)) {
+            // set the owning side to null (unless already changed)
+            if ($historicMovement->getCategory() === $this) {
+                $historicMovement->setCategory(null);
             }
         }
 
