@@ -54,21 +54,17 @@ class Products
 
     #[ORM\ManyToOne(inversedBy: 'product')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Categories $categories = null;
-
-    #[ORM\ManyToOne(inversedBy: 'product')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Prix::class)]
-    private Collection $prix;
-
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Prix::class, orphanRemoval: true)]
+    private Collection $prixes;
 
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
         $this->historicMovements = new ArrayCollection();
         $this->prix = new ArrayCollection();
+        $this->prixes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,16 +249,16 @@ class Products
     /**
      * @return Collection<int, Prix>
      */
-    public function getPrix(): Collection
+    public function getPrixes(): Collection
     {
-        return $this->prix;
+        return $this->prixes;
     }
 
     public function addPrix(Prix $prix): self
     {
-        if (!$this->prix->contains($prix)) {
-            $this->prix->add($prix);
-            $prix->setProducts($this);
+        if (!$this->prixes->contains($prix)) {
+            $this->prixes->add($prix);
+            $prix->setProduct($this);
         }
 
         return $this;
@@ -270,15 +266,15 @@ class Products
 
     public function removePrix(Prix $prix): self
     {
-        if ($this->prix->removeElement($prix)) {
+        if ($this->prixes->removeElement($prix)) {
             // set the owning side to null (unless already changed)
-            if ($prix->getProducts() === $this) {
-                $prix->setProducts(null);
+            if ($prix->getProduct() === $this) {
+                $prix->setProduct(null);
             }
         }
 
         return $this;
     }
 
-
+    
 }

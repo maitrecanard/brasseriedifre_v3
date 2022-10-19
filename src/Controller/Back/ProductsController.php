@@ -2,9 +2,13 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Prix;
 use App\Entity\Products;
 use App\Form\ProductsType;
+use App\Repository\PrixRepository;
 use App\Repository\ProductsRepository;
+use App\Repository\QuantitiesRepository;
+use App\Service\ProductSlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,21 +32,52 @@ class ProductsController extends AbstractController
     /**
      * @Route("/new", name="app_back_products_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ProductsRepository $productsRepository): Response
+    public function new(Request $request, ProductsRepository $productsRepository, QuantitiesRepository $quantitiesRepository, PrixRepository $prixRepository, ProductSlugger $slugger): Response
     {
         $product = new Products();
         $form = $this->createForm(ProductsType::class, $product);
         $form->handleRequest($request);
-
+        $quantities = $quantitiesRepository->findAll();
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $product->setSlug($slugger->slugify($product->getName()));
+            $product->setImage('test.jpg');
+            $product->setCreatedAt(new \DateTimeImmutable());
+
             $productsRepository->add($product, true);
+
+            $prix = new Prix();
+            $prices = [];
+            for ($i = 1; $i <= count($quantities); $i ++) {
+            
+                $price = $request->request->get($i);
+                $prices[] = $price;
+            }
+            dump($prices);
+            dump($quantities);
+           $test = [];
+            for($i = 0; $i < count($quantities); $i ++) {
+                $prix->setQuantity($quantities[$i]);
+                $prix->setPrix($prices[$i]);
+            
+                $prix->setProduct($product);
+                $prixRepository->add($prix, true);
+                $test[] = $prix;
+            }
+            dd($test);
+            
+    
+
+            
 
             return $this->redirectToRoute('app_back_products_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->renderForm('back/products/new.html.twig', [
             'product' => $product,
             'form' => $form,
+            'quantities' => $quantities
         ]);
     }
 

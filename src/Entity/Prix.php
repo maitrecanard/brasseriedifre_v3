@@ -18,16 +18,18 @@ class Prix
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\Column]
-    private ?int $QuatitiesId = null;
+    #[ORM\OneToOne(inversedBy: 'prix', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quantities $quantity = null;
 
-    #[ORM\Column]
-    private ?int $Products_id = null;
+    #[ORM\ManyToOne(inversedBy: 'prixes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Products $product = null;
 
-    #[ORM\ManyToOne(inversedBy: 'prix')]
-    private ?Products $products = null;
-
-
+    public function __construct()
+    {
+        //$this->product = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -46,40 +48,30 @@ class Prix
         return $this;
     }
 
-    public function getQuatitiesId(): ?int
+    public function getQuantity(): ?Quantities
     {
-        return $this->QuatitiesId;
+        return $this->quantity;
     }
 
-    public function setQuatitiesId(int $QuatitiesId): self
+    public function setQuantity(Quantities $quantity): self
     {
-        $this->QuatitiesId = $QuatitiesId;
+        $this->quantity = $quantity;
 
         return $this;
     }
 
-    public function getProductsId(): ?int
+    public function getProduct(): ?Products
     {
-        return $this->Products_id;
+        return $this->product;
     }
 
-    public function setProductsId(int $Products_id): self
+    public function setProduct(?Products $product): self
     {
-        $this->Products_id = $Products_id;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getProducts(): ?Products
-    {
-        return $this->products;
-    }
-
-    public function setProducts(?Products $products): self
-    {
-        $this->products = $products;
-
-        return $this;
-    }
+    
 
 }
