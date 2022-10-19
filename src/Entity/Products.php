@@ -60,11 +60,15 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categorie = null;
 
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Prix::class)]
+    private Collection $prix;
+
 
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
         $this->historicMovements = new ArrayCollection();
+        $this->prix = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -242,6 +246,36 @@ class Products
     public function setCategorie(?Categories $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prix>
+     */
+    public function getPrix(): Collection
+    {
+        return $this->prix;
+    }
+
+    public function addPrix(Prix $prix): self
+    {
+        if (!$this->prix->contains($prix)) {
+            $this->prix->add($prix);
+            $prix->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrix(Prix $prix): self
+    {
+        if ($this->prix->removeElement($prix)) {
+            // set the owning side to null (unless already changed)
+            if ($prix->getProducts() === $this) {
+                $prix->setProducts(null);
+            }
+        }
 
         return $this;
     }

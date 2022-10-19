@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Products;
+use App\Entity\Prix;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,7 +32,12 @@ class ProductsType extends AbstractType
                     'data_class' => null
                 ]
             ])*/
-            ->add('quantities', EntityType::class)
+            ->add('prix', EntityType::class, [
+                'class' => Prix::class,
+                'choice_label' => 'QuatitiesId',
+                'mapped' => false
+            ]
+            )
             ->add('degre', NumberType::class, [
                 'label' => 'Alcool' 
             ])
@@ -52,6 +58,9 @@ class ProductsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Products::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }

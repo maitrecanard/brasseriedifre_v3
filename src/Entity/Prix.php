@@ -24,6 +24,9 @@ class Prix
     #[ORM\Column]
     private ?int $Products_id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'prix')]
+    private ?Products $products = null;
+
 
 
     public function getId(): ?int
@@ -63,6 +66,18 @@ class Prix
     public function setProductsId(int $Products_id): self
     {
         $this->Products_id = $Products_id;
+
+        return $this;
+    }
+
+    public function getProducts(): ?Products
+    {
+        return $this->products;
+    }
+
+    public function setProducts(?Products $products): self
+    {
+        $this->products = $products;
 
         return $this;
     }
