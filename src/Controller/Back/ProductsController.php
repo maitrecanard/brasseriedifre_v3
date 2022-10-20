@@ -57,8 +57,8 @@ class ProductsController extends AbstractController
             dump($prices);
             dump($quantities);
            $test = [];
-            for($i = 0; $i < count($quantities); $i ++) {
-                $prix->setQuantity($quantities[$i]);
+            for($i = 1; $i <= count($quantities); $i ++) {
+                $prix->addQuantity($quantities[$i]);
                 $prix->setPrix($prices[$i]);
             
                 $prix->setProduct($product);

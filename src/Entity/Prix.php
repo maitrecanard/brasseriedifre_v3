@@ -18,17 +18,17 @@ class Prix
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\OneToOne(inversedBy: 'prix', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Quantities $quantity = null;
-
     #[ORM\ManyToOne(inversedBy: 'prixes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Products $product = null;
 
+    #[ORM\OneToMany(mappedBy: 'prix', targetEntity: Quantities::class, orphanRemoval: true)]
+    private Collection $quantities;
+
     public function __construct()
     {
         //$this->product = new ArrayCollection();
+        $this->quantities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -48,17 +48,6 @@ class Prix
         return $this;
     }
 
-    public function getQuantity(): ?Quantities
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(Quantities $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
 
     public function getProduct(): ?Products
     {
@@ -68,6 +57,36 @@ class Prix
     public function setProduct(?Products $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantities>
+     */
+    public function getQuantities(): Collection
+    {
+        return $this->quantities;
+    }
+
+    public function addQuantity(Quantities $quantity): self
+    {
+        if (!$this->quantities->contains($quantity)) {
+            $this->quantities->add($quantity);
+            $quantity->setPrix($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantity(Quantities $quantity): self
+    {
+        if ($this->quantities->removeElement($quantity)) {
+            // set the owning side to null (unless already changed)
+            if ($quantity->getPrix() === $this) {
+                $quantity->setPrix(null);
+            }
+        }
 
         return $this;
     }

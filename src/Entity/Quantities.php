@@ -16,7 +16,8 @@ class Quantities
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\OneToOne(mappedBy: 'quantity', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'quantities')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Prix $prix = null;
 
     public function getId(): ?int
@@ -41,13 +42,8 @@ class Quantities
         return $this->prix;
     }
 
-    public function setPrix(Prix $prix): self
+    public function setPrix(?Prix $prix): self
     {
-        // set the owning side of the relation if necessary
-        if ($prix->getQuantity() !== $this) {
-            $prix->setQuantity($this);
-        }
-
         $this->prix = $prix;
 
         return $this;
