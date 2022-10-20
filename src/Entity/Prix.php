@@ -22,8 +22,9 @@ class Prix
     #[ORM\JoinColumn(nullable: false)]
     private ?Products $product = null;
 
-    #[ORM\OneToMany(mappedBy: 'prix', targetEntity: Quantities::class, orphanRemoval: true)]
-    private Collection $quantities;
+    #[ORM\ManyToOne(inversedBy: 'prixes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quantities $quantity = null;
 
     public function __construct()
     {
@@ -61,36 +62,16 @@ class Prix
         return $this;
     }
 
-    /**
-     * @return Collection<int, Quantities>
-     */
-    public function getQuantities(): Collection
+    public function getQuantity(): ?Quantities
     {
-        return $this->quantities;
+        return $this->quantity;
     }
 
-    public function addQuantity(Quantities $quantity): self
+    public function setQuantity(?Quantities $quantity): self
     {
-        if (!$this->quantities->contains($quantity)) {
-            $this->quantities->add($quantity);
-            $quantity->setPrix($this);
-        }
+        $this->quantity = $quantity;
 
         return $this;
-    }
-
-    public function removeQuantity(Quantities $quantity): self
-    {
-        if ($this->quantities->removeElement($quantity)) {
-            // set the owning side to null (unless already changed)
-            if ($quantity->getPrix() === $this) {
-                $quantity->setPrix(null);
-            }
-        }
-
-        return $this;
-    }
-
-    
+    }    
 
 }

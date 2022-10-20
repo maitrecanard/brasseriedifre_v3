@@ -47,31 +47,24 @@ class ProductsController extends AbstractController
 
             $productsRepository->add($product, true);
 
-            $prix = new Prix();
+    
             $prices = [];
             for ($i = 1; $i <= count($quantities); $i ++) {
             
                 $price = $request->request->get($i);
                 $prices[] = $price;
             }
-            dump($prices);
-            dump($quantities);
-           $test = [];
-            for($i = 1; $i <= count($quantities); $i ++) {
-                $prix->addQuantity($quantities[$i]);
-                $prix->setPrix($prices[$i]);
             
+            for($i = 0; $i < count($quantities); $i ++) {
+                $prix = new Prix();
+                $prix->setQuantity($quantities[$i]);
+                $prix->setPrix($prices[$i]);
                 $prix->setProduct($product);
                 $prixRepository->add($prix, true);
-                $test[] = $prix;
-            }
-            dd($test);
-            
-    
 
-            
+            }            
 
-            return $this->redirectToRoute('app_back_products_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_back_products_show', ['id'=>$product->getId()], Response::HTTP_SEE_OTHER);
         }
         
         return $this->renderForm('back/products/new.html.twig', [
@@ -84,21 +77,24 @@ class ProductsController extends AbstractController
     /**
      * @Route("/{id}", name="app_back_products_show", methods={"GET"})
      */
-    public function show(Products $product): Response
+    public function show(Products $product, PrixRepository $prixRepository, QuantitiesRepository $quantitiesRepository): Response
     {
+        
         return $this->render('back/products/show.html.twig', [
             'product' => $product,
+            'prices' => $prices = $prixRepository->findBy(['product'=> $product],['prix'=> 'ASC']),
+            'quantities' => $quantities = $quantitiesRepository->findBy([],['id'=> 'ASC']),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="app_back_products_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Products $product, ProductsRepository $productsRepository): Response
+    public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository): Response
     {
         $form = $this->createForm(ProductsType::class, $product);
         $form->handleRequest($request);
-
+        $prices = $prixRepository->findBy(['product'=> $product]);
         if ($form->isSubmitted() && $form->isValid()) {
             $productsRepository->add($product, true);
 
@@ -108,6 +104,7 @@ class ProductsController extends AbstractController
         return $this->renderForm('back/products/edit.html.twig', [
             'product' => $product,
             'form' => $form,
+            'prices' => $prices
         ]);
     }
 

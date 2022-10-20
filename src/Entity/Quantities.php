@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuantitiesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuantitiesRepository::class)]
@@ -16,9 +18,13 @@ class Quantities
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quantities')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Prix $prix = null;
+    #[ORM\OneToMany(mappedBy: 'quantity', targetEntity: Prix::class)]
+    private Collection $prixes;
+
+    public function __construct()
+    {
+        $this->prixes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -37,17 +43,37 @@ class Quantities
         return $this;
     }
 
-    public function getPrix(): ?Prix
+    /**
+     * @return Collection<int, Prix>
+     */
+    public function getPrixes(): Collection
     {
-        return $this->prix;
+        return $this->prixes;
     }
 
-    public function setPrix(?Prix $prix): self
+    public function addPrix(Prix $prix): self
     {
-        $this->prix = $prix;
+        if (!$this->prixes->contains($prix)) {
+            $this->prixes->add($prix);
+            $prix->setQuantity($this);
+        }
 
         return $this;
     }
+
+    public function removePrix(Prix $prix): self
+    {
+        if ($this->prixes->removeElement($prix)) {
+            // set the owning side to null (unless already changed)
+            if ($prix->getQuantity() === $this) {
+                $prix->setQuantity(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 
    
 }

@@ -1,11 +1,13 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    {% for quantity in quantities %}
+    {% if quantities is defined %}
+        {% for quantity in quantities %}
         
-        <input name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }}" disabled>
-    {% endfor %}
-    {% for price in quantities %}
-        <input name="{{ price.id }}" type="text">
-    {% endfor %}
+            <input name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }}" disabled>
+        {% endfor %}
+        {% for price in quantities %}
+            <input name="{{ price.id }}" type="text">
+        {% endfor %}
+    {% endif %}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
