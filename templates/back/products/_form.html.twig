@@ -1,13 +1,42 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <h3>Tarification</h3>
     {% if quantities is defined %}
-        {% for quantity in quantities %}
-        
-            <input name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }}" disabled>
-        {% endfor %}
+    <div style="display:flex; flex-direction:row;">
+        <div style="display:flex;flex-direction:column;">
+            <span style="margin-bottom:1em;">Quantitées</span>
+            {% for quantity in quantities %}
+                    <input style="border:0;" name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }} cl" disabled>
+            {% endfor %}
+        </div>
+        <div style="display:flex;flex-direction:column;">
+        <span style="margin-bottom:1em;">Prix</span>
         {% for price in quantities %}
-            <input name="{{ price.id }}" type="text">
+           <div style="display:flex;"> <input class="form-control" name="{{ price.id }}" type="text"/> €</div>
         {% endfor %}
+          </div>
+    </div>
+    {% else %}
+        <div style="display:flex; flex-direction:row;">
+        <div style="display:flex;flex-direction:column;">
+            <span style="margin-bottom:1em;">Quantitées</span>
+            {% dump prices %}
+            {% for quantity in prices %}
+                    <input style="border:0;" name="product[quantity{{ quantity.quatity.id }}]" value="{{ quantity.quantity.quantity }} cl" disabled>
+            {% endfor %}
+        </div>
+        <div style="display:flex;flex-direction:column;">
+        <span style="margin-bottom:1em;">Prix</span>
+        {% for price in prices %}
+           <div style="display:flex;"> <input class="form-control" name="{{ price.id }}" value="{{ price.prix }}" type="text"/> €</div>
+        {% endfor %}
+          </div>
+    </div>
     {% endif %}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+        <button class="btn btn-success btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="text">{{ button_label|default('Enregistrer') }}</span>
+                                    </button>
 {{ form_end(form) }}

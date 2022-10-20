@@ -37,6 +37,10 @@ class ProductsType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categories::class,
                 'choice_label' => 'name',
+                
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('degre', NumberType::class, [
                 'label' => 'Alcool' 
@@ -46,9 +50,12 @@ class ProductsType extends AbstractType
             ])
             ->add('active', ChoiceType::class, [
                 'label' => 'Publié',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
                 'choices' => [
-                    'Oui' => 1,
-                    'Non' => 0
+                    'Non' => 0,
+                    'Oui' => 1
                 ]
             ])
         ;

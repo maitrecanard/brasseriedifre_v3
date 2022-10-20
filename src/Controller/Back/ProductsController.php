@@ -95,6 +95,7 @@ class ProductsController extends AbstractController
         $form = $this->createForm(ProductsType::class, $product);
         $form->handleRequest($request);
         $prices = $prixRepository->findBy(['product'=> $product]);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $productsRepository->add($product, true);
 
