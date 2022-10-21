@@ -32,7 +32,7 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
 
-                <td><img src="{{ asset('assets/content/pictures/')}}{{ product.image }}"></td>
+                <td><img style="height:100px;border-radius:7px;" src="{{ asset('uploads/products/' ~ product.image) }}"></td>
 
                 <td>{{ product.active ? '<span class="btn btn-outline-success">Oui</span>' : '<span class="btn btn-outline-danger">Non</span>' }}</td>
                 <td>
