@@ -95,11 +95,11 @@ class ProductsController extends AbstractController
      */
     public function show(Products $product, PrixRepository $prixRepository, QuantitiesRepository $quantitiesRepository): Response
     {
-        
         return $this->render('back/products/show.html.twig', [
             'product' => $product,
             'prices' => $prices = $prixRepository->findBy(['product'=> $product],['prix'=> 'ASC']),
             'quantities' => $quantities = $quantitiesRepository->findBy([],['id'=> 'ASC']),
+            'historical' => $historical = $product->getHistoricMovements()->getValues()
         ]);
     }
 

@@ -1,9 +1,9 @@
 {% extends 'back/back_base.html.twig' %}
 
-{% block title %}Products{% endblock %}
+{% block title %}Produit {{ product.name }}{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-0 text-gray-800">{{ product.name }}</h1>
+    <h1 class="h3 mb-0 text-gray-800">Produit {{ product.name }}</h1>
     </div>
     <div style="display:flex;justify-content:space-between;">
   <a class="btn btn-light" href="{{ path('app_back_products_index') }}">Retour à la liste</a>
@@ -47,6 +47,9 @@
                 <th>Contenu</th>
                 <td>{{ product.content }}</td>
             </tr>
+                             </tbody>
+                </table>
+                   
             <tr>
                 <th>Quantité / Prix</th>
                 <td style="display:flex;"> 
@@ -83,6 +86,34 @@
             </tr>
         </tbody>
     </table>
+</div>
+</div>
+<h2 class="h3 mb-0 text-gray-800">Historique des modifications de l'article</h2>
+<div class="card shadow mb-4">
 
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Action</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                       
+                                    <tbody>
+                                    {% for historic in historical %}
+                                     <tr>
+                                            <td>{{ historic.user.firstname }} {{ historic.user.lastname }}</td>
+                                            <td>{{ historic.name }}</td>
+                                            <td>{{ historic.createdAt ? historic.createdAt|date('d/m/Y H:i:s') : ''}}</td>
+    
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>                                </table>
+                            </div>
+                        </div>
+                    </div>        
 
 {% endblock %}
