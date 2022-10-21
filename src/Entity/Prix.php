@@ -16,7 +16,7 @@ class Prix
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?float $prix = null;
+    private ?string $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'prixes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -37,12 +37,12 @@ class Prix
         return $this->id;
     }
 
-    public function getPrix(): ?float
+    public function getPrix(): ?string
     {
         return $this->prix;
     }
 
-    public function setPrix(float $prix): self
+    public function setPrix(string $prix): self
     {
         $this->prix = $prix;
 

@@ -97,7 +97,7 @@ class ProductsController extends AbstractController
     {
         return $this->render('back/products/show.html.twig', [
             'product' => $product,
-            'prices' => $prices = $prixRepository->findBy(['product'=> $product],['prix'=> 'ASC']),
+            'prices' => $prices = $prixRepository->findBy(['product'=> $product],['id'=> 'ASC']),
             'quantities' => $quantities = $quantitiesRepository->findBy([],['id'=> 'ASC']),
             'historical' => $historical = $product->getHistoricMovements()->getValues()
         ]);
@@ -108,14 +108,35 @@ class ProductsController extends AbstractController
      */
     public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository): Response
     {
+       //dd($product);
         $form = $this->createForm(ProductsType::class, $product);
         $form->handleRequest($request);
         $prices = $prixRepository->findBy(['product'=> $product]);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $prices = $product->getPrixes()->getValues();
+            
+            $arrayPrice = [];
+            foreach($prices AS $price) {
+            
+                $price = $request->request->get('price_'.$price->getId());
+                // intégration des valeurs dans un tableau
+                $arrayPrice[] = $price;
+            }
+     
+            for($i = 0; $i < count($prices); $i ++) {
+
+               $getPrice = $prixRepository->find($prices[$i]);
+               $getPrice->getId($prices[$i]);
+               $getPrice->setPrix($arrayPrice[$i]);
+               $prixRepository->add($getPrice, true);
+            }
+
+     
+
             $productsRepository->add($product, true);
 
-            return $this->redirectToRoute('app_back_products_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_back_products_show', ['id'=>$product->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/products/edit.html.twig', [

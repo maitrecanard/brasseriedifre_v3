@@ -66,7 +66,7 @@
         <div style="display:flex;flex-direction:column;">
         <span style="margin-bottom:1em;">Prix</span>
         {% for price in prices %}
-           <div style="display:flex;"> <input class="form-control" name="{{ price.id }}" value="{{ price.prix }}" type="text"/> €</div>
+           <div style="display:flex;"> <input class="form-control" name="price_{{ price.id }}" value="{{ price.prix }}" type="text"/> €</div>
         {% endfor %}
           </div>
     </div>
