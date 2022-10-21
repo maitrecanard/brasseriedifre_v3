@@ -3,12 +3,16 @@
 {% block title %}Products{% endblock %}
 
 {% block body %}
-    <h1>{{ product.name }}</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{ product.name }}</h1>
+    </div>
     <div style="display:flex;justify-content:space-between;">
   <a class="btn btn-light" href="{{ path('app_back_products_index') }}">Retour à la liste</a>
  
     <a class="btn btn-outline-secondary" href="{{ path('app_back_products_edit', {'id': product.id}) }}">Modifier</a>
     </div>
+        <div class="card shadow mb-4">
+   <div class="card-body">
+    <h3>Information général</h3>
     <table class="table">
         <tbody>
             <tr>

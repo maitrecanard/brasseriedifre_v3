@@ -2,12 +2,14 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\HistoricMovement;
 use App\Entity\Prix;
 use App\Entity\Products;
 use App\Form\ProductsType;
 use App\Repository\PrixRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\QuantitiesRepository;
+use App\Repository\HistoricMovementRepository;
 use App\Service\ProductSlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +34,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/new", name="app_back_products_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ProductsRepository $productsRepository, QuantitiesRepository $quantitiesRepository, PrixRepository $prixRepository, ProductSlugger $slugger): Response
+    public function new(Request $request, ProductsRepository $productsRepository, QuantitiesRepository $quantitiesRepository, PrixRepository $prixRepository, ProductSlugger $slugger, HistoricMovementRepository $historicMovementRepository): Response
     {
         $product = new Products();
         $form = $this->createForm(ProductsType::class, $product);
@@ -41,20 +43,24 @@ class ProductsController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             
+            // enregistrement du sug / de l'image et de la date de création du produit
             $product->setSlug($slugger->slugify($product->getName()));
             $product->setImage('test.jpg');
             $product->setCreatedAt(new \DateTimeImmutable());
 
             $productsRepository->add($product, true);
 
-    
+            
+            // récupération des champs de tarif
             $prices = [];
             for ($i = 1; $i <= count($quantities); $i ++) {
             
                 $price = $request->request->get($i);
+                // intégration des valeurs dans un tableau
                 $prices[] = $price;
             }
             
+            // récupération de la quantité / tarif et produit pour les enregistré en table prix
             for($i = 0; $i < count($quantities); $i ++) {
                 $prix = new Prix();
                 $prix->setQuantity($quantities[$i]);
@@ -62,7 +68,17 @@ class ProductsController extends AbstractController
                 $prix->setProduct($product);
                 $prixRepository->add($prix, true);
 
-            }            
+            } 
+            
+            // hitorisation du mouvement
+            $user = $this->getUser();
+            $historic = new HistoricMovement();
+            $historic->setName('Création');
+            $historic->setProduct($product);
+            $historic->setUser($user);
+            $historic->setCreatedAt(new \DateTimeImmutable());
+            $historicMovementRepository->add($historic,true);
+            
 
             return $this->redirectToRoute('app_back_products_show', ['id'=>$product->getId()], Response::HTTP_SEE_OTHER);
         }
