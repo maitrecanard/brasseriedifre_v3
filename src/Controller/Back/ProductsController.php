@@ -10,6 +10,7 @@ use App\Repository\PrixRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\QuantitiesRepository;
 use App\Repository\HistoricMovementRepository;
+use App\Service\FileUploader;
 use App\Service\ProductSlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +35,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/new", name="app_back_products_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ProductsRepository $productsRepository, QuantitiesRepository $quantitiesRepository, PrixRepository $prixRepository, ProductSlugger $slugger, HistoricMovementRepository $historicMovementRepository): Response
+    public function new(Request $request, ProductsRepository $productsRepository, QuantitiesRepository $quantitiesRepository, PrixRepository $prixRepository, ProductSlugger $slugger, HistoricMovementRepository $historicMovementRepository, FileUploader $fileUploader): Response
     {
         $product = new Products();
         $form = $this->createForm(ProductsType::class, $product);
@@ -47,19 +48,30 @@ class ProductsController extends AbstractController
             $product->setSlug($slugger->slugify($product->getName()));
             $product->setImage('test.jpg');
             $product->setCreatedAt(new \DateTimeImmutable());
+             // Retrieving the image file from the form
+             $pictureFile = $form->get('picture')->getData();
 
+             // If the image has been correctly filled in, then we enter the condition
+             if($pictureFile) {
+                 // using the FileUploader service, we process the image and then save it in a specific folder.
+                 $pictureFileName = $fileUploader->upload($pictureFile, 'product_directory');
+ 
+                 // inserting the image into the image field of the grievance entity
+                 $product->setImage($pictureFileName);
+             }
             $productsRepository->add($product, true);
 
-            
             // récupération des champs de tarif
             $prices = [];
             for ($i = 1; $i <= count($quantities); $i ++) {
-            
-                $price = $request->request->get($i);
-                // intégration des valeurs dans un tableau
-                $prices[] = $price;
+             
+                    $price = $request->request->get($i);
+                    // intégration des valeurs dans un tableau
+                    $prices[] = $price;
+                
+
             }
-            
+
             // récupération de la quantité / tarif et produit pour les enregistré en table prix
             for($i = 0; $i < count($quantities); $i ++) {
                 $prix = new Prix();
@@ -106,7 +118,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_back_products_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository): Response
+    public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository, FileUploader $fileUploader): Response
     {
        //dd($product);
         $form = $this->createForm(ProductsType::class, $product);
@@ -132,7 +144,16 @@ class ProductsController extends AbstractController
                $prixRepository->add($getPrice, true);
             }
 
-     
+            $pictureFile = $form->get('picture')->getData();
+
+            // If the image has been correctly filled in, then we enter the condition
+            if($pictureFile) {
+                // using the FileUploader service, we process the image and then save it in a specific folder.
+                $pictureFileName = $fileUploader->upload($pictureFile, 'product_directory');
+
+                // inserting the image into the image field of the grievance entity
+                $product->setImage($pictureFileName);
+            }
 
             $productsRepository->add($product, true);
 

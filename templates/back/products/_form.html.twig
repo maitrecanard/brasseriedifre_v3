@@ -45,7 +45,7 @@
         <div style="display:flex;flex-direction:column;">
             <span style="margin-bottom:1em;">Quantitées</span>
             {% for quantity in quantities %}
-                    <input style="border:0;" name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }} cl" disabled>
+                    <input style="border:0; height:38px;" name="product[quantity{{ quantity.id }}]" value="{{ quantity.quantity }}" disabled>
             {% endfor %}
         </div>
         <div style="display:flex;flex-direction:column;">
@@ -60,7 +60,7 @@
         <div style="display:flex;flex-direction:column;">
             <span style="margin-bottom:1em;">Quantitées</span>
             {% for quantity in prices %}
-                    <input style="border:0;" name="product[quantity{{ quantity.quantity.id }}]" value="{{ quantity.quantity.quantity }} cl" disabled>
+                    <input style="border:0; height:38px;" name="product[quantity{{ quantity.quantity.id }}]" value="{{ quantity.quantity.quantity }}" disabled>
             {% endfor %}
         </div>
         <div style="display:flex;flex-direction:column;">

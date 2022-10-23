@@ -16,7 +16,7 @@ class Quantities
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    private ?string $quantity = null;
 
     #[ORM\OneToMany(mappedBy: 'quantity', targetEntity: Prix::class)]
     private Collection $prixes;
@@ -31,12 +31,12 @@ class Quantities
         return $this->id;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?string
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setQuantity(string $quantity): self
     {
         $this->quantity = $quantity;
 
