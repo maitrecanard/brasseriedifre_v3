@@ -79,7 +79,13 @@
                             </td>
                             <td>
                                 {% for price in prices %}
-                                  <p>  {{ price.prix }} € </p>
+                                    {% dump price %}
+                                    {% if price.prix|length > 0 %}
+                                        <p>  {{ price.prix }} € </p>
+                                    {% else %}
+                                        <p style="height:24px;"></p>
+                                    {% endif %}
+                                  
                                 {% endfor %}
                             </td>
                         </tr>
@@ -93,7 +99,7 @@
     </table>
 </div>
 </div>
-<h2 class="h3 mb-0 text-gray-800">Historique des modifications de l'article</h2>
+<h2 class="h3 mb-0 text-gray-800">Historique des mouvements de l'article</h2>
 <div class="card shadow mb-4">
 
                         <div class="card-body">

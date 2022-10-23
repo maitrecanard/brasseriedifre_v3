@@ -18,12 +18,14 @@ use App\Repository\HistoricMovementRepository;
 class CategoriesRepository extends ServiceEntityRepository
 {
     protected $productRepository;
+    protected $historicMovementRepository;
 
 
-    public function __construct(ManagerRegistry $registry, HistoricMovementRepository $historicMovementRepository)
+    public function __construct(ManagerRegistry $registry, HistoricMovementRepository $historicMovementRepository, ProductsRepository $productRepository)
     {
         parent::__construct($registry, Categories::class);
         $this->historicMovementRepository = $historicMovementRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function add(Categories $entity, bool $flush = false): void
@@ -46,8 +48,13 @@ class CategoriesRepository extends ServiceEntityRepository
 
     public function removeCategoryHistoric(Categories $entity, bool $flush = false): void
     {
-    
+        $products = $entity->getProducts();
         $historical = $this->historicMovementRepository->findBy(['category' => $entity]);
+
+        foreach($products as $productHistoric) {
+           
+            $this->productRepository->removeHistoricalProduct($productHistoric, true);
+        }
 
         foreach($historical as $historic) {
             $this->getEntityManager()->remove($historic);

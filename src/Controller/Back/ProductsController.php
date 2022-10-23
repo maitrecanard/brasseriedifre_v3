@@ -118,7 +118,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_back_products_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository, FileUploader $fileUploader): Response
+    public function edit(Request $request, Products $product, ProductsRepository $productsRepository, PrixRepository $prixRepository, FileUploader $fileUploader, HistoricMovementRepository $historicMovementRepository): Response
     {
        //dd($product);
         $form = $this->createForm(ProductsType::class, $product);
@@ -157,6 +157,16 @@ class ProductsController extends AbstractController
 
             $productsRepository->add($product, true);
 
+            // hitorisation du mouvement
+            $user = $this->getUser();
+            $historic = new HistoricMovement();
+            $historic->setName('modification');
+            $historic->setProduct($product);
+            $historic->setUser($user);
+            $historic->setCreatedAt(new \DateTimeImmutable());
+            $historicMovementRepository->add($historic,true);
+            
+
             return $this->redirectToRoute('app_back_products_show', ['id'=>$product->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -173,7 +183,7 @@ class ProductsController extends AbstractController
     public function delete(Request $request, Products $product, ProductsRepository $productsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productsRepository->remove($product, true);
+            $productsRepository->removeHistoricalProduct($product, true);
         }
 
         return $this->redirectToRoute('app_back_products_index', [], Response::HTTP_SEE_OTHER);
