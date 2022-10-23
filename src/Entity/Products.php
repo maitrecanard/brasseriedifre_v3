@@ -49,16 +49,22 @@ class Products
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: QuantityPrix::class, orphanRemoval: true)]
-    private Collection $quantityPrixes;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HistoricMovement::class)]
+    private Collection $historicMovements;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'product')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categorie = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Prix::class, orphanRemoval: true)]
+    private Collection $prixes;
 
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
+        $this->historicMovements = new ArrayCollection();
+        $this->prix = new ArrayCollection();
+        $this->prixes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -199,29 +205,29 @@ class Products
     }
 
     /**
-     * @return Collection<int, QuantityPrix>
+     * @return Collection<int, HistoricMovement>
      */
-    public function getQuantityPrixes(): Collection
+    public function getHistoricMovements(): Collection
     {
-        return $this->quantityPrixes;
+        return $this->historicMovements;
     }
 
-    public function addQuantityPrix(QuantityPrix $quantityPrix): self
+    public function addHistoricMovement(HistoricMovement $historicMovement): self
     {
-        if (!$this->quantityPrixes->contains($quantityPrix)) {
-            $this->quantityPrixes->add($quantityPrix);
-            $quantityPrix->setProduct($this);
+        if (!$this->historicMovements->contains($historicMovement)) {
+            $this->historicMovements->add($historicMovement);
+            $historicMovement->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeQuantityPrix(QuantityPrix $quantityPrix): self
+    public function removeHistoricMovement(HistoricMovement $historicMovement): self
     {
-        if ($this->quantityPrixes->removeElement($quantityPrix)) {
+        if ($this->historicMovements->removeElement($historicMovement)) {
             // set the owning side to null (unless already changed)
-            if ($quantityPrix->getProduct() === $this) {
-                $quantityPrix->setProduct(null);
+            if ($historicMovement->getProduct() === $this) {
+                $historicMovement->setProduct(null);
             }
         }
 
@@ -239,4 +245,36 @@ class Products
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Prix>
+     */
+    public function getPrixes(): Collection
+    {
+        return $this->prixes;
+    }
+
+    public function addPrix(Prix $prix): self
+    {
+        if (!$this->prixes->contains($prix)) {
+            $this->prixes->add($prix);
+            $prix->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrix(Prix $prix): self
+    {
+        if ($this->prixes->removeElement($prix)) {
+            // set the owning side to null (unless already changed)
+            if ($prix->getProduct() === $this) {
+                $prix->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
