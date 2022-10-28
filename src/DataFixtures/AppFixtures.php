@@ -2,12 +2,24 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categories;
+use App\Entity\Prix;
+use App\Entity\Products;
+use App\Entity\Quantities;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Service\ProductSlugger;
 
 class AppFixtures extends Fixture
 {
+    protected $slugger;
+
+    public function __construct(ProductSlugger $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $users = [];
@@ -25,6 +37,47 @@ class AppFixtures extends Fixture
             $usersList[] = $user;
         }
 
+        $categoriesList = $this->categories();
+        $categories = [];
+
+        for($i = 0; $i < count($categoriesList); $i ++) {
+            $category = new Categories();
+            $category->setName($categoriesList[$i]);
+            $manager->persist($category);
+            $categories[] = $category;
+        }
+
+        $quantitiesList = $this->quantities();
+        $quantities = [];
+
+        for($i = 0; $i < count($quantitiesList); $i ++){
+            $quantity = new Quantities();
+            $quantity->setQuantity($quantitiesList[$i]);
+            $manager->persist($quantity);
+            $quantities[] = $quantity;
+        }
+
+        $productsList = $this->products();
+
+        foreach($productsList AS $products) {
+            $product = new Products();
+            $product->setCategorie($categories[$products['category']]);
+            $product->setName($products['name']);
+            $product->setSlug($this->slugger->slugify($products['name']));
+            $product->setSubtitle($products['subtitle']);
+            $product->setDescription($products['description']);
+            $product->setContent($products['content']);
+            $product->setImage($products['image']);
+            $product->setDegre($products['degre']);
+            $product->setNote($products['note']);
+            $product->setCreatedAt(new \DateTimeImmutable());
+
+            $manager->persist($product);
+
+          //  $price = new Prix();
+           // $price->setQuantity()
+        }
+
         $manager->flush();
     }
 
@@ -35,7 +88,8 @@ class AppFixtures extends Fixture
                 "email" => "mathieusiaudeau@gmail.com",
                 "firstname" => "Mathieu",
                 "lastname" => "Siaudeau",
-                "roles" => "ROLE_SUPADMIN"
+                "roles" => "ROLE_SUPADMIN",
+
             ],
             2 => [
                 "email" => "contact@brasseriedifre.fr",
@@ -46,5 +100,68 @@ class AppFixtures extends Fixture
         ];
 
         return $users;
+    }
+
+    public function categories()
+    {
+        $categories = [
+            "Bière à l'année",
+            "Bière temporaire",
+            "Fut",
+            "Goodies"
+        ];
+
+        return $categories;
+    }
+
+    public function products()
+    {
+        $products = [
+            1 => [
+                "category" => 0,
+                "name" => "La béré",
+                "subtitle" => "Contient du gluten. Ingrédients : eau, malts d'orge, houblons, levure.",
+                "description" => "Une pale ale toute en rondeurs, maltée, avec des notes légèrement fleuries et fruitées, sa robe est blonde dorée, l’amertume est moyenne.",
+                "content" => "En saintongeais, le patois poitevin du sud qui était parlé jusqu'à Chauvigny, la bére dau poetou raffraichit les gosiers.",
+                "image" => "bere.jpg",
+                "degre" => "5,3",
+                "note" => 3,
+            ]
+            ];
+
+            return $products;
+    }
+
+    public function quantities()
+    {
+        $quantities = [
+                "Prix unique (goodies)",
+                "33",
+                "75",
+                "Basique 5l",
+                "Basique 15l",
+                "Basique 30l",
+                "Médium 5l",
+                "Médium 15l",
+                "Médium 30l",
+                "Luxe 5l",
+                "Luxe 15l",
+                "Luxe 30l"
+            
+        ];
+
+        return $quantities;
+    }
+
+    public function prices()
+    {
+        $prices = [
+            1 => [
+                "quantity" => 0,
+                "price" => "" 
+            ]
+            ];
+
+            return $prices;
     }
 }

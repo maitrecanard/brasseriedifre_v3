@@ -59,6 +59,12 @@ class Products
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Prix::class, orphanRemoval: true)]
     private Collection $prixes;
 
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $period = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $note = null;
+
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
@@ -272,6 +278,30 @@ class Products
                 $prix->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPeriod(): ?string
+    {
+        return $this->period;
+    }
+
+    public function setPeriod(?string $period): self
+    {
+        $this->period = $period;
+
+        return $this;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }
