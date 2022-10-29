@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Categories;
+use App\Entity\HistoricMovement;
 use App\Entity\Prix;
 use App\Entity\Products;
 use App\Entity\Quantities;
@@ -45,6 +46,7 @@ class AppFixtures extends Fixture
             $category->setName($categoriesList[$i]);
             $manager->persist($category);
             $categories[] = $category;
+            $this->historic($usersList[0],$categoriesList[$i],NULL,"Création");
         }
 
         $quantitiesList = $this->quantities();
@@ -74,8 +76,13 @@ class AppFixtures extends Fixture
 
             $manager->persist($product);
 
-          //  $price = new Prix();
-           // $price->setQuantity()
+            for($i = 0; $i < count($quantities); $i ++) {
+                $price = new Prix();
+                $price->setQuantity($quantities[$i]);
+                $price->setProduct($product);
+                $price->setPrix('');
+                $manager->persist($price);
+            }
         }
 
         $manager->flush();
@@ -153,15 +160,18 @@ class AppFixtures extends Fixture
         return $quantities;
     }
 
-    public function prices()
+    /**
+     * enregistrement de l'historique de modification
+     */
+    public function historic($user,$categorie = null,$product = null,$name, ObjectManager $manager)
     {
-        $prices = [
-            1 => [
-                "quantity" => 0,
-                "price" => "" 
-            ]
-            ];
-
-            return $prices;
+        $historic = new HistoricMovement();
+        $historic->setUser($user);
+        $historic->setCategory($categorie);
+        $historic->setProduct($product);
+        $historic->setName($name);
+        $manager->persist($historic);
     }
+
+ 
 }
