@@ -44,7 +44,7 @@ class ProductsType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Histoire'
             ])
-            ->add('degre', NumberType::class, [
+            ->add('degre', TextType::class, [
                 'label' => 'Alcool' 
             ])
             ->add('picture', FileType::class, [
