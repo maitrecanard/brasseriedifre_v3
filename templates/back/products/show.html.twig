@@ -34,16 +34,16 @@
                 <td>{{ product.description }}</td>
             </tr>
             <tr>
-                <th>Contenu</th>
+                <th>Histoire</th>
                 <td>{{ product.content }}</td>
             </tr>
             <tr>
                 <th>Date de création</th>
-                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product.createdAt ? product.createdAt|date('H:i:s d/m/Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Date de modification</th>
-                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product.updatedAt ? product.updatedAt|date('H:i:s d/m/Y') : '' }}</td>
             </tr>
            
             <tr>
@@ -120,7 +120,7 @@
                                      <tr>
                                             <td>{{ historic.user.firstname }} {{ historic.user.lastname }}</td>
                                             <td>{{ historic.name }}</td>
-                                            <td>{{ historic.createdAt ? historic.createdAt|date('d/m/Y H:i:s') : ''}}</td>
+                                            <td>{{ historic.createdAt ? historic.createdAt|date('H:i:s d/m/Y') : ''}}</td>
     
                                         </tr>
                                         {% endfor %}

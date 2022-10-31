@@ -15,6 +15,7 @@ use App\Service\ProductSlugger;
 class AppFixtures extends Fixture
 {
     protected $slugger;
+    protected $manager;
 
     public function __construct(ProductSlugger $slugger)
     {
@@ -35,9 +36,9 @@ class AppFixtures extends Fixture
             $user->setPassword('Abcd1234!');
 
             $manager->persist($user);
-            $usersList[] = $user;
+            $users[] = $user;
         }
-
+       // dump($users);
         $categoriesList = $this->categories();
         $categories = [];
 
@@ -46,7 +47,13 @@ class AppFixtures extends Fixture
             $category->setName($categoriesList[$i]);
             $manager->persist($category);
             $categories[] = $category;
-            $this->historic($usersList[0],$categoriesList[$i],NULL,"Création");
+            
+            $historic = new HistoricMovement();
+            $historic->setUser($users[0]);
+            $historic->setCategory($category);
+            $historic->setName('Création');
+            $historic->setCreatedAt(new \DateTimeImmutable());
+            $manager->persist($historic);
         }
 
         $quantitiesList = $this->quantities();
@@ -75,6 +82,13 @@ class AppFixtures extends Fixture
             $product->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($product);
+
+            $historic = new HistoricMovement();
+            $historic->setUser($users[0]);
+            $historic->setProduct($product);
+            $historic->setName('Création');
+            $historic->setCreatedAt(new \DateTimeImmutable());
+            $manager->persist($historic);
 
             for($i = 0; $i < count($quantities); $i ++) {
                 $price = new Prix();
@@ -158,19 +172,6 @@ class AppFixtures extends Fixture
         ];
 
         return $quantities;
-    }
-
-    /**
-     * enregistrement de l'historique de modification
-     */
-    public function historic($user,$categorie = null,$product = null,$name, ObjectManager $manager)
-    {
-        $historic = new HistoricMovement();
-        $historic->setUser($user);
-        $historic->setCategory($categorie);
-        $historic->setProduct($product);
-        $historic->setName($name);
-        $manager->persist($historic);
     }
 
  

@@ -42,7 +42,7 @@ class ProductsType extends AbstractType
                 ]
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Contenu'
+                'label' => 'Histoire'
             ])
             ->add('degre', NumberType::class, [
                 'label' => 'Alcool' 
