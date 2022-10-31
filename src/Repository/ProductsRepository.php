@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Repository\HistoricMovementRepository;
 use App\Entity\Products;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,9 +17,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    protected $historicMouvement;
+    public function __construct(ManagerRegistry $registry, HistoricMovementRepository $historicMovementRepository)
     {
         parent::__construct($registry, Products::class);
+        $this->historicMouvement = $historicMovementRepository;
     }
 
     public function add(Products $entity, bool $flush = false): void
@@ -32,6 +35,21 @@ class ProductsRepository extends ServiceEntityRepository
 
     public function remove(Products $entity, bool $flush = false): void
     {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function removeHistoricalProduct(Products $entity, bool $flush = false): void
+    {
+        $historical = $entity->getHistoricMovements()->getValues();
+
+        foreach($historical AS $historic) {
+            $this->getEntityManager()->remove($historic);
+        }
+
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
