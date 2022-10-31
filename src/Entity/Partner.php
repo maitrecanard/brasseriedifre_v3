@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PartnerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,17 @@ class Partner
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'partner')]
+    private ?HistoricMovement $historicMovement = null;
+
+    #[ORM\OneToMany(mappedBy: 'partner', targetEntity: HistoricMovement::class)]
+    private Collection $historicMovements;
+
+    public function __construct()
+    {
+        $this->historicMovements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +148,48 @@ class Partner
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getHistoricMovement(): ?HistoricMovement
+    {
+        return $this->historicMovement;
+    }
+
+    public function setHistoricMovement(?HistoricMovement $historicMovement): self
+    {
+        $this->historicMovement = $historicMovement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoricMovement>
+     */
+    public function getHistoricMovements(): Collection
+    {
+        return $this->historicMovements;
+    }
+
+    public function addHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if (!$this->historicMovements->contains($historicMovement)) {
+            $this->historicMovements->add($historicMovement);
+            $historicMovement->setPartner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if ($this->historicMovements->removeElement($historicMovement)) {
+            // set the owning side to null (unless already changed)
+            if ($historicMovement->getPartner() === $this) {
+                $historicMovement->setPartner(null);
+            }
+        }
 
         return $this;
     }
