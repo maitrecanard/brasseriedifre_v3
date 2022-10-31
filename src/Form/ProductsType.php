@@ -27,7 +27,7 @@ class ProductsType extends AbstractType
                 'label' => 'Nom',
             ])
             ->add('subtitle', TextType::class, [
-                'label' => 'Sous titre',
+                'label' => 'Ingrédient',
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
@@ -41,11 +41,11 @@ class ProductsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('content', TextareaType::class, [
+                'label' => 'Histoire'
+            ])
             ->add('degre', NumberType::class, [
                 'label' => 'Alcool' 
-            ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Contenu'
             ])
             ->add('picture', FileType::class, [
                 'label' => 'Image du produit',
