@@ -42,9 +42,12 @@ class PartnerRepository extends ServiceEntityRepository
     public function removeHistoricalPartner(Partner $entity, bool $flush = false): void
     {
         $historical = $entity->getHistoricMovements()->getValues();
-
         foreach($historical AS $historic) {
+       
             $this->getEntityManager()->remove($historic);
+            if ($flush) {
+                $this->getEntityManager()->flush();
+            }
         }
 
         $this->getEntityManager()->remove($entity);

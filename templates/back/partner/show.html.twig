@@ -52,11 +52,35 @@
             </tr>
         </tbody>
     </table>
+</div>
+</div>
+ <h2 class="h3 mb-0 text-gray-800">Historique des mouvements du partenaire</h2>
+<div class="card shadow mb-4">
 
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Action</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                       
+                                    <tbody>
+                                    {% for historic in historical %}
+                                     <tr>
+                                            <td>{{ historic.user.firstname }} {{ historic.user.lastname }}</td>
+                                            <td>{{ historic.name }}</td>
+                                            <td>{{ historic.createdAt ? historic.createdAt|date('d/m/Y H:i:s') : ''}}</td>
+    
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>                                </table>
                             </div>
                         </div>
-                    </div>  
-
+                    </div>        
     <a href="{{ path('app_back_partner_edit', {'id': partner.id}) }}"class="btn btn-warning btn-icon-split mb-3">
                                         <span class="icon text-white-50">
                                            <i class="fas fa-arrow-right"></i>
