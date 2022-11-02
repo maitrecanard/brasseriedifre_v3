@@ -174,5 +174,22 @@ class AppFixtures extends Fixture
         return $quantities;
     }
 
+    public function partner()
+    {
+        $partners= [
+            1=> [
+                "name" => "Le kiosque",
+                "description" => null,
+                "adresse" => "13 bis place de Trino, 86300 Chauvigny",
+                "tel" => "05.49.13.64.49",
+                "site" => "https://lekiosqueachauvigny.eatbu.com/?lang=fr",
+                "active" => 1
+            ],
+            2 => [
+                
+            ]
+        ]
+    }
+
  
 }
