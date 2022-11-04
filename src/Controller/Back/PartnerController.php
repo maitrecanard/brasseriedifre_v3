@@ -57,7 +57,7 @@ class PartnerController extends AbstractController
         $historic  = $partner->getHistoricMovements()->getValues();
         return $this->render('back/partner/show.html.twig', [
             'partner' => $partner,
-            'historical' => $historicMovementRepository->findBy(['partner'=> $partner])
+            'historical' => $historic
         ]);
     }
 
