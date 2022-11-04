@@ -2,15 +2,16 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Categories;
-use App\Entity\HistoricMovement;
 use App\Entity\Prix;
-use App\Entity\Products;
-use App\Entity\Quantities;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Entity\Partner;
+use App\Entity\Products;
+use App\Entity\Categories;
+use App\Entity\Quantities;
 use App\Service\ProductSlugger;
+use App\Entity\HistoricMovement;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
@@ -97,6 +98,29 @@ class AppFixtures extends Fixture
                 $price->setPrix('');
                 $manager->persist($price);
             }
+        }
+
+        $partnersList =$this->partner();
+       
+       foreach($partnersList AS $p) {
+            $partner = new Partner();
+            $partner->setName($p['name']);
+            $partner->setAdress($p['adresse']);
+            $partner->setDescription($p['description']);
+            $partner->setCreatedAt(new \DateTimeImmutable());
+            $partner->setPhone($p['tel']);
+            $partner->setUrl($p['site']);
+            $partner->setActive(($p['active']));
+
+            $manager->persist($partner);
+
+            $historic = new HistoricMovement();
+            $historic->setName('Création');
+            $historic->setCreatedAt(new \DateTimeImmutable());
+            $historic->setPartner($partner);
+            $historic->setUser($users[1]);
+
+            $manager->persist($historic);
         }
 
         $manager->flush();
@@ -186,10 +210,16 @@ class AppFixtures extends Fixture
                 "active" => 1
             ],
             2 => [
-                
+                "name" => "La Belle Epoque",
+                "description" => null,
+                "adresse" => "1 rue Saint-Pierre, 86300 Chauvigny",
+                "tel"=> "05.49.46.55.23",
+                "site" => "http://www.la-belle-epoque.fr/",
+                "active" => 1
             ]
-        ]
-    }
+            ];
 
+            return $partners;
+    }
  
 }

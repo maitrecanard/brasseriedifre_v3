@@ -32,12 +32,13 @@
             </tr>
             <tr>
                 <th>Adresse</th>
-                <td>{{ partner.adress }}</td>
+                <td>{{ partner.adress }}
+                <input style="display:none;" id="partner_adress" value="{{ partner.adress }}"></td>
             </tr>
             <tr>
                 <th>carte</th>
                 <td>
-                    <div id="detailsMap"></div>
+                    <div id="detailsMap" style="height:600px;"></div>
                 </td>
             </tr>
             <tr>

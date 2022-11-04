@@ -52,12 +52,12 @@ class PartnerController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_back_partner_show', methods: ['GET'])]
-    public function show(Partner $partner): Response
+    public function show(Partner $partner, HistoricMovementRepository $historicMovementRepository): Response
     {
         $historic  = $partner->getHistoricMovements()->getValues();
         return $this->render('back/partner/show.html.twig', [
             'partner' => $partner,
-            'historical' => $historic
+            'historical' => $historicMovementRepository->findBy(['partner'=> $partner])
         ]);
     }
 

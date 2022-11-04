@@ -11,7 +11,7 @@ const map = {
     content: document.querySelector('#partner_phone'),
 
     init: function() {
-
+        console.log('good');
         // on vérifie que l'input image existe
         if(map.content){
             // si l'input existe, on initialise un écouteur de clique
@@ -43,7 +43,7 @@ const map = {
 
     // on envoi la valeur de l'input vers l'api
     sendMap: function(address) {
-
+        console.log(address);
         const config = {
             method: 'GET',
             mode: 'cors',
@@ -80,7 +80,7 @@ const map = {
 
 
         let mymap
-        mymap = L.map('detailsMap').setView([lat,lon], 16)
+        mymap = L.map('detailsMap').setView([lat,lon], 18)
         L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
             attribution: 'Carte fournie par Wikimedia',
             minZoom: 1,
