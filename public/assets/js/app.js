@@ -4,6 +4,7 @@ const app = {
 
     init: function() {
         
+        mail.init();
         map.init();
         app.httpHeaders.append("Content-Type", "application/json");
 
