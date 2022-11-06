@@ -16,8 +16,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MailApiController extends AbstractController
 {
-    #[Route('/api/mail', name: 'mail_post',  methods: ["POST"])]
-    public function index(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, MailRepository $mailRepository)
+    #[Route('/api/sendmail', name: 'mail_post',  methods: ["POST"])]
+    public function index(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, MailRepository $mailRepository) : JsonResponse
     {
         
         $json = $request->getContent();
@@ -49,5 +49,16 @@ class MailApiController extends AbstractController
 
         return $this->json(['success' => 'Mail send'], Response::HTTP_CREATED );
         
+    }
+
+    #[Route('/api/getnewmail', name: 'mail_get', methods: ["GET"])]
+    public function getNewMail(MailRepository $mailRepository) : JsonResponse
+    {
+        $mails = $mailRepository->findBy(['status'=>1]);
+        $mail = count($mails);
+
+        return $this->json(['mail'=>$mail], Response::HTTP_OK, [], [
+            'groups' => 'mail_get'
+        ]);
     }
 }
