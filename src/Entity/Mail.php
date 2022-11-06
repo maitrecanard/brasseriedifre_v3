@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MailRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MailRepository::class)]
 class Mail
@@ -15,6 +16,7 @@ class Mail
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['mail_post'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 150)]
@@ -24,7 +26,7 @@ class Mail
     private ?string $content = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at = NULL;
 
     #[ORM\Column]
     private ?int $status = null;
@@ -75,7 +77,7 @@ class Mail
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(?\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -87,7 +89,7 @@ class Mail
         return $this->status;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(?int $status): self
     {
         $this->status = $status;
 
