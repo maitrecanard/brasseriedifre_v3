@@ -17,7 +17,7 @@ class MailController extends AbstractController
     public function index(MailRepository $mailRepository): Response
     {
         return $this->render('back/mail/index.html.twig', [
-            'mails' => $mailRepository->findAll(),
+            'mails' => $mailRepository->findBy([ ],['id'=> 'DESC']),
         ]);
     }
 

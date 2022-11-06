@@ -20,9 +20,11 @@ class Mail
     private ?string $name = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups(['mail_post'])]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['mail_post'])]
     private ?string $content = null;
 
     #[ORM\Column]
