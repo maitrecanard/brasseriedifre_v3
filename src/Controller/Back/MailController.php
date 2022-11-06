@@ -41,28 +41,13 @@ class MailController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_back_mail_show', methods: ['GET'])]
-    public function show(Mail $mail): Response
+    public function show(Mail $mail, MailRepository $mailRepository): Response
     {
+        $mail->setStatus(2);
+        $mailRepository->add($mail, true);
+
         return $this->render('back/mail/show.html.twig', [
             'mail' => $mail,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_back_mail_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Mail $mail, MailRepository $mailRepository): Response
-    {
-        $form = $this->createForm(MailType::class, $mail);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mailRepository->add($mail, true);
-
-            return $this->redirectToRoute('app_back_mail_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('back/mail/edit.html.twig', [
-            'mail' => $mail,
-            'form' => $form,
         ]);
     }
 

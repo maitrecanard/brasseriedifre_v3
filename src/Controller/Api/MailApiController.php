@@ -47,7 +47,7 @@ class MailApiController extends AbstractController
         $mail->setStatus(1);
         $mailRepository->add($mail, true);
 
-        return $this->json($mail, Response::HTTP_CREATED );
+        return $this->json(['success' => 'Mail send'], Response::HTTP_CREATED );
         
     }
 }

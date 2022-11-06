@@ -3,20 +3,22 @@
 {% block title %}Mail{% endblock %}
 
 {% block body %}
-    <h1>Mail</h1>
-
+    <h1 class="h3 mb-0 text-gray-800">Message de {{ mail.name }}</h1>
+</div>
+<div style="display:flex;justify-content:space-between;">
+<a class="btn btn-secondary btn-icon-split mb-4" href="{{ path('app_back_mail_index') }}"><span class="icon text-white-50">
+            <i class="fas fa-arrow-right"></i>
+        </span>
+        <span class="text">Retour à la liste</span>
+    </a>
+    </div>
+     <div class="card shadow mb-4">
+   <div class="card-body">
     <table class="table">
         <tbody>
+            
             <tr>
-                <th>Id</th>
-                <td>{{ mail.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ mail.name }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
+                <th>Adresse email</th>
                 <td>{{ mail.address }}</td>
             </tr>
             <tr>
@@ -24,19 +26,13 @@
                 <td>{{ mail.content }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
-                <td>{{ mail.createdAt ? mail.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ mail.status }}</td>
+                <th>Envoyé le</th>
+                <td>{{ mail.createdAt ? mail.createdAt|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_back_mail_index') }}">back to list</a>
-
-    <a href="{{ path('app_back_mail_edit', {'id': mail.id}) }}">edit</a>
+</div>
+</div>
 
     {{ include('back/mail/_delete_form.html.twig') }}
 {% endblock %}

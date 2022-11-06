@@ -26,10 +26,15 @@
                 <td>{{ mail.name }}</td>
                 <td>{{ mail.address }}</td>
                 <td>{{ mail.createdAt ? mail.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ mail.status }}</td>
                 <td>
-                    <a href="{{ path('app_back_mail_show', {'id': mail.id}) }}">show</a>
-                    <a href="{{ path('app_back_mail_edit', {'id': mail.id}) }}">edit</a>
+                    {% if mail.status == 1 %}
+                        <i class="fas fa-envelope"></i> Nouveau
+                    {% elseif mail.status == 2 %}
+                        <i class="fas fa-envelope-open"></i> Lu
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_back_mail_show', {'id': mail.id}) }}">Lire</a>
                 </td>
             </tr>
         {% else %}
