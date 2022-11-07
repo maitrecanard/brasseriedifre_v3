@@ -5,7 +5,8 @@ const mail = {
 
     init: function() {
 
-        mail.searchNewMail;
+      //  mail.searchNewMail;
+        setTimeout(mail.searchNewMail,0000);
         setInterval(mail.searchNewMail,1000);
 
     },
