@@ -3,39 +3,46 @@
 {% block title %}Pages{% endblock %}
 
 {% block body %}
-    <h1>Pages</h1>
-
+    <h1 class="h3 mb-0 text-gray-800">{{ page.title}}</h1>
+</div>
+<div style="display:flex;justify-content:space-between;">
+ <a class="btn btn-secondary btn-icon-split mb-4"  href="{{ path('app_back_pages_index') }}">    <span class="icon text-white-50">
+            <i class="fas fa-arrow-right"></i>
+        </span>
+        <span class="text">Retour à la liste</span>
+    </a>
+      </div>
+        <div class="card shadow mb-4">
+   <div class="card-body">
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Référence</th>
                 <td>{{ page.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ page.title }}</td>
             </tr>
             <tr>
                 <th>Subtitle</th>
                 <td>{{ page.subtitle }}</td>
             </tr>
             <tr>
-                <th>Slug</th>
-                <td>{{ page.slug }}</td>
-            </tr>
-            <tr>
                 <th>Content</th>
                 <td>{{ page.content }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
-                <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Mise à jour</th>
+                <td>{{ page.updatedAt ? page.updatedAt|date('d/m/Yd H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
+</div>
+</div>
 
-    <a href="{{ path('app_back_pages_index') }}">back to list</a>
 
-    <a href="{{ path('app_back_pages_edit', {'id': page.id}) }}">edit</a>
+    <a href="{{ path('app_back_pages_edit', {'id': page.id}) }}"class="btn btn-warning btn-icon-split mb-3">
+                                        <span class="icon text-white-50">
+                                           <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                        <span class="text">Editer</span>
+                                    </a>
 
 {% endblock %}
