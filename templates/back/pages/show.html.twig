@@ -1,0 +1,41 @@
+{% extends 'back/back_base.html.twig' %}
+
+{% block title %}Pages{% endblock %}
+
+{% block body %}
+    <h1>Pages</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ page.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ page.title }}</td>
+            </tr>
+            <tr>
+                <th>Subtitle</th>
+                <td>{{ page.subtitle }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ page.slug }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ page.content }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_back_pages_index') }}">back to list</a>
+
+    <a href="{{ path('app_back_pages_edit', {'id': page.id}) }}">edit</a>
+
+{% endblock %}

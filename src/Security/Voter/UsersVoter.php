@@ -10,12 +10,13 @@ class UsersVoter extends Voter
 {
     public const EDIT = 'POST_EDIT';
     public const VIEW = 'POST_VIEW';
+    public const NEW = 'POST_NEW';
 
     protected function supports(string $attribute, $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW])
+        return in_array($attribute, [self::EDIT, self::VIEW, self::NEW])
             && $subject instanceof \App\Entity\User;
     }
 
@@ -45,6 +46,13 @@ class UsersVoter extends Voter
             case self::VIEW:
                 // logic to determine if the user can VIEW
                 // return true or false
+                break;
+            case self::NEW:
+
+                    if($user->getRoles()[0] == "ROLE_SUPADMIN") {
+                        return true;
+                    }
+
                 break;
         }
 
