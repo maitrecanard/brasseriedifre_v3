@@ -16,12 +16,13 @@ class UsersVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW])
-            && $subject instanceof \App\Entity\Users;
+            && $subject instanceof \App\Entity\User;
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
+        dump($user);
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
             return false;
@@ -31,9 +32,12 @@ class UsersVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
 
-                    dump($subject);
-
-                    if($subject->getRoles() === $user->getRoles()  ) {
+                    if($subject->getId() === 1)
+                    {
+                        if($user->getRoles()[0] == "ROLE_SUPADMIN") {
+                            return true;
+                        }
+                    } else if ($subject->getId() > 1) {
                         return true;
                     }
 

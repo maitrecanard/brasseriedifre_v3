@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @Route("/back/user")
@@ -59,13 +60,24 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_back_user_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $this->denyAccessUnlessGranted('POST_EDIT', $user);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $previousPassword = $user->getPassword();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $passwordInForm = $form->get('password')->getData();
+            // on vérifie si on a soumis un mot de passe
+            if($passwordInForm) {
+                // si c'est le cas (password != null)
+                // hash du mot de passe 
+                $user->setPassword($passwordHasher->hashPassword($user, $passwordInForm));
+            } else {
+                // le mot de passe ne doit pas être changé, donc on remet le précédent
+                $user->setPassword($previousPassword);
+            }
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_back_user_index', [], Response::HTTP_SEE_OTHER);
