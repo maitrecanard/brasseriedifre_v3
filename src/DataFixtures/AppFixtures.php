@@ -80,6 +80,7 @@ class AppFixtures extends Fixture
             $product->setImage($products['image']);
             $product->setDegre($products['degre']);
             $product->setNote($products['note']);
+            $product->setActive(1);
             $product->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($product);

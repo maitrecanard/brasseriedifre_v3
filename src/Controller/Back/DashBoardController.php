@@ -18,15 +18,15 @@ class DashBoardController extends AbstractController
     public function index(VisitorCounter $visitor, ProductsCounter $products, ProductsRepository $productsRepository): Response
     {
         
-        $visitor->visitorEnter();
         $countVisitor = $visitor->getCountVisitor();
-
+        $bestProduct = $products->getBestproduct();
         $activProducts = $products->getCountProductsStatus(1);
         $inactivProducts = $products->getCountProductsStatus(0);
         $products =  $productsRepository->findAll();
 
         return $this->render('back/main/index.html.twig', [
             'countVisitor' => $countVisitor,
+            'bestProduct' => $bestProduct,
             'activProducts' => $activProducts,
             'inactivProducts' => $inactivProducts,
             'products' => $products

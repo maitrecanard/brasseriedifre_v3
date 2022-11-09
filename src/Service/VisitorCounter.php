@@ -46,7 +46,8 @@ class VisitorCounter
 
     public function getCountVisitor()
     {
-        $visitor = $this->visitorRepository->findAll();
+        $date = new \DateTime(date('Y-m-d'));
+        $visitor = $this->visitorRepository->findBy(['date' => $date]);
 
         $count = count($visitor);
 
