@@ -34,6 +34,9 @@ class HistoricMovement
     #[ORM\ManyToOne(inversedBy: 'historicMovements')]
     private ?Partner $partner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'historicMovements')]
+    private ?Pages $page = null;
+
 
     public function getId(): ?int
     {
@@ -111,6 +114,20 @@ class HistoricMovement
 
         return $this;
     }
+
+    public function getPage(): ?Pages
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Pages $page): self
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    
 
 
 }

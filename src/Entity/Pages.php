@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PagesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,15 @@ class Pages
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: HistoricMovement::class)]
+    private Collection $historicMovements;
+
+    public function __construct()
+    {
+        $this->historicMovements = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -93,4 +104,36 @@ class Pages
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, HistoricMovement>
+     */
+    public function getHistoricMovements(): Collection
+    {
+        return $this->historicMovements;
+    }
+
+    public function addHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if (!$this->historicMovements->contains($historicMovement)) {
+            $this->historicMovements->add($historicMovement);
+            $historicMovement->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricMovement(HistoricMovement $historicMovement): self
+    {
+        if ($this->historicMovements->removeElement($historicMovement)) {
+            // set the owning side to null (unless already changed)
+            if ($historicMovement->getPage() === $this) {
+                $historicMovement->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
