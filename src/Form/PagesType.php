@@ -33,6 +33,9 @@ class PagesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Pages::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }

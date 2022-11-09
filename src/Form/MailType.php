@@ -24,6 +24,9 @@ class MailType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Mail::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }
