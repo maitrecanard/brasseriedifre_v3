@@ -17,6 +17,14 @@
     <script defer src="{{ asset('assets/js/map.js') }}"></script>
     <script defer src="{{ asset('assets/js/mail.js') }}"></script>
     <script defer src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="https://cdn.tiny.cloud/1/xgly37j54vcy83rwh1yad18u4dkovebtak5pundp5wb5qjh4/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '.tinymce',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+      });
+    </script>
 {% endblock %}
     
   </head>
@@ -105,6 +113,12 @@
                 <a class="nav-link" href="{{ path('app_back_user_index') }}">
                     <i class="fas fa-user-edit"></i>
                     <span>Utilisateurs</span></a>
+            </li>
+
+                        <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_back_pages_index') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Pages</span></a>
             </li>
 
             <!-- Divider -->

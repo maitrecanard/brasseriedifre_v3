@@ -2,19 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Categories;
+use App\Entity\Pages;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class CategoriesType extends AbstractType
+class PagesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom',
+            ->add('subtitle',TextType::class,[
+                'label' => 'Sous titre'
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'contenu',
+                'attr' => [
+                    'class' => 'tinymce'
+                ]
             ])
         ;
     }
@@ -22,7 +29,7 @@ class CategoriesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Categories::class,
+            'data_class' => Pages::class,
             'attr' => [
                 'novalidate' => 'novalidate'
             ]
