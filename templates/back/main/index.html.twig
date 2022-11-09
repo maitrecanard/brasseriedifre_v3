@@ -17,7 +17,7 @@
     {% if products == NULL %}
         Aucun produit enregistré
     {% else %}
-      {{ activProducts }} produits publié / {{inactivProducts}} produits non publié
+      <a href="{{ path('app_back_products_index') }}">{{ activProducts }} produits publié / {{inactivProducts}} produits non publié</a>
     {% endif %}
     </div>
     <div class="col">point de vente</div>

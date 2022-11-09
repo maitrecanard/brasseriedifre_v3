@@ -7,8 +7,9 @@ use App\Repository\VisitorRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class VisitorCounter
+class VisitorCounter extends AbstractController
 {
 
     private $visitorRepository;
@@ -31,14 +32,17 @@ class VisitorCounter
         $ip = $_SERVER['REMOTE_ADDR'];
         $date = new \DateTime(date('Y-m-d'));
         $verifVisit = $this->visitorRepository->findBy(['ip'=> $ip, 'date'=> $date]);
-        dump($verifVisit);
         if (!$verifVisit)
         {
-            $visitor = new Visitor;
-            $visitor->setIp($ip);
-            $visitor->setDevice('No information');
-            $visitor->setDate(new \DateTime(date('Y-m-d')));
-            $this->visitorRepository->add($visitor, true);
+            
+            if(!$this->getUser()) {
+                $visitor = new Visitor;
+                $visitor->setIp($ip);
+                $visitor->setDevice('No information');
+                $visitor->setDate(new \DateTime(date('Y-m-d')));
+                $this->visitorRepository->add($visitor, true);
+            } else if($this->getUser()->getRoles() == "ROLES_SUPADMIN" || $this->getUser()->getRoles() == "ROLES_ADMIN")
+            {} 
         }
 
 
