@@ -37,7 +37,7 @@ class ProductsCounter
 
     public function getBestproduct() : Int
     {
-        $bestProduct = $this->productsRepository->findBy(['vue'=> 'DESC']);
+        $bestProduct = $this->productsRepository->findBy([],['vue'=> 'DESC'],1,NULL);
         $count = count($bestProduct);
 
         return $count;
