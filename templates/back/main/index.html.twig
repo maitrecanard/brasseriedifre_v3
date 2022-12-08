@@ -3,18 +3,32 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
-<div class="container text-center">
+<div class="container text-center" >
   <div class="row row-cols-3">
-    <div class="card mb-4 py-3 border-left-primary">{{ countVisitor }} visiteurs ce jour</div>
-    <div class="col">Column</div>
+    <div class="card mb-4 py-3 border-left-primary">
+        {% if countVisitor == 0 %}
+          Pas de visiteur ce jour
+        {% else %}
+           <a href="{{ path('app_back_visitor') }}">{{ countVisitor }} visiteurs ce jour</a>
+        {% endif %}
+    </div>
+    <div class="card mb-4 py-3 border-left-success">
+      {% if bestProduct == NULL %}
+        Aucun clic enregistré
+      {% else %}
+        {{ bestProduct.image }} Produit le plus visité
+      {% endif %}
+    </div>
     <div class="card mb-4 py-3 border-left-info">
     {% if products == NULL %}
         Aucun produit enregistré
     {% else %}
-      {{ activProducts }} produits publié / {{inactivProducts}} produits non publié
+      <a href="{{ path('app_back_products_index') }}">{{ activProducts }} produits publié / {{inactivProducts}} produits non publié</a>
     {% endif %}
     </div>
-    <div class="col">Column</div>
+    <div class="col">point de vente</div>
+    <div class="col">Message</div>
+    <div class="col">Mise à jour</div>
   </div>
 </div>
 {% endblock %}

@@ -37,6 +37,8 @@ var openMenu = function openMenu() {
   }
 
   mobileMenuDOM.classList.add("open");
+  mobileMenuDOM.classList.add("open");
+  mobileMenuDOM.classList.add("open");
 }; // Permet d’ouvrir ou de fermer le menu en fonction de son état :
 
 
