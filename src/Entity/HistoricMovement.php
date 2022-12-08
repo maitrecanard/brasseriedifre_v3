@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HistoricMovementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HistoricMovementRepository::class)]
@@ -28,6 +30,13 @@ class HistoricMovement
     #[ORM\ManyToOne(inversedBy: 'historicMovements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'historicMovements')]
+    private ?Partner $partner = null;
+
+    #[ORM\ManyToOne(inversedBy: 'historicMovements')]
+    private ?Pages $page = null;
+
 
     public function getId(): ?int
     {
@@ -93,4 +102,32 @@ class HistoricMovement
 
         return $this;
     }
+
+    public function getPartner(): ?Partner
+    {
+        return $this->partner;
+    }
+
+    public function setPartner(?Partner $partner): self
+    {
+        $this->partner = $partner;
+
+        return $this;
+    }
+
+    public function getPage(): ?Pages
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Pages $page): self
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    
+
+
 }
