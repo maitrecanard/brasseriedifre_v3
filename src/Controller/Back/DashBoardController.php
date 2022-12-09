@@ -23,7 +23,6 @@ class DashBoardController extends AbstractController
         $activProducts = $products->getCountProductsStatus(1);
         $inactivProducts = $products->getCountProductsStatus(0);
         $products =  $productsRepository->findAll();
-
         return $this->render('back/main/index.html.twig', [
             'countVisitor' => $countVisitor,
             'bestProduct' => $bestProduct,

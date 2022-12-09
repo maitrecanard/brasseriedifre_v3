@@ -35,12 +35,24 @@ class ProductsCounter
         return $count;
     }
 
-    public function getBestproduct() : Int
+    public function getBestproduct() : array
     {
         $bestProduct = $this->productsRepository->findBy([],['vue'=> 'DESC'],1,NULL);
-        $count = count($bestProduct);
-
-        return $count;
+        //$count = count($bestProduct);
+        $best = [];
+        foreach($bestProduct AS $product)
+        {
+            if($product->getVue() == NULL)
+            {
+                return $best;
+            } else {
+                $best[] = $product;
+                
+            }
+        }
+        
+        return $best;
+        
     }
 
 }

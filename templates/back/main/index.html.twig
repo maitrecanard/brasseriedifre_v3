@@ -16,7 +16,9 @@
       {% if bestProduct == NULL %}
         Aucun clic enregistré
       {% else %}
-        {{ bestProduct.image }} Produit le plus visité
+        {% for best in bestProduct %}
+        Produit le plus consulté  <img style="width:60px;height:60px;" src="{{ asset('assets/images/' ~ best.image) }}"/> {{ best.name }}
+        {% endfor %}
       {% endif %}
     </div>
     <div class="card mb-4 py-3 border-left-info">
