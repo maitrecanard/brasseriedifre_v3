@@ -3,22 +3,14 @@
 {% block title %}Brasserie Difré - Accueil{% endblock %}
 
 {% block body %}
-<h1>La brasserie de Valdivienne</h1>
-      
+    <h1>La brasserie de Valdivienne</h1>
         <section class="presentation">
-
             <article>
-                <!-- début affichage article  
-                    faire juste un echo de l'article, puis supprimer les informations entre le début et fin
-                    
-                    (les balises h1,p,h3, sont en base)-->
-                    <h2>{{ page.title }}</h2>
-                    {{ page.content|raw }}
-<div class="container-img">
-    <img src="../assets/images/certification.jpg" alt="">
-</div>
-
-          <!-- fin affichage article -->             
+                <h2>{{ page.subtitle }}</h2>
+                {{ page.content|raw }}
+                <div class="container-img">
+                    <img src="../assets/images/certification.jpg" alt="">
+                </div>
             </article>
         </section>
 {% endblock %}
