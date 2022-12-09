@@ -19,17 +19,17 @@
             display: none;
         }
     </style>
-    <script defer src="assets/js/home.bundle.js"></script>
-    <script defer src="assets/js/biere.bundle.js"></script>
-    <script defer src="assets/js/loader.bundle.js"></script>
-    <script defer src="assets/js/topbar.bundle.js"></script>
+    <script defer src="{{ asset('assets/js/home.bundle.js') }}"></script>
+    <script defer src="{{ asset('assets/js/biere.bundle.js') }}"></script>
+    <script defer src="{{ asset('assets/js/loader.bundle.js') }}"></script>
+    <script defer src="{{ asset('assets/js/topbar.bundle.js') }}"></script>
 </head>
 <body>  
    
     <div class="loader-container">
         <div class="loader">
         </div>
-        <img class="loader-logo" src="../assets/images/logo_loader.png" alt="logo">
+        <img class="loader-logo" src="{{ asset('assets/images/logo_loader.png') }}" alt="logo">
     </div>
     <header>
         {% block stylesheets %}

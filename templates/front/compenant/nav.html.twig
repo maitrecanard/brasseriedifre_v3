@@ -2,14 +2,14 @@
     <div class="header-shadow">
             <div class="header-nav">
                 
-                <div class="logo"><a href="./home.html"><img src="assets/images/logo.png" width="100px" alt=""></a></div>
+                <div class="logo"><a href="{{ path('home') }}"><img src="{{ asset('assets/images/logo.png') }}" width="100px" alt=""></a></div>
                 <div class="header-menu">
                 <nav>
                     <ul>
-                        <li><a href="./home.html">Accueil</a></li>
-                        <li><a href="./bieres.html">Les bières à Difré</a></li>
-                        <li><a href="./map.html">Où sommes nous ?</a></li>
-                        <li><a href="./contact.html">Nous contacter</a></li>
+                        <li><a href="{{ path('home') }}">Accueil</a></li>
+                        <li><a href="{{ path('app_front_beer') }}">Les bières à Difré</a></li>
+                        <li><a href="#">Où sommes nous ?</a></li>
+                        <li><a href="#">Nous contacter</a></li>
                     </ul> 
                 </nav>
             </div>

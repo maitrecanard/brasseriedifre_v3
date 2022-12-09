@@ -25,7 +25,7 @@ class ProductController extends AbstractController
     #[Route('/biere/{id}/{slug}', name:'app_details_beer', methods:'GET')]
     public function productDetail(Products $products)
     {
-        return $this->render('front/beer/show.html.twig',[
+        return $this->render('front/product/show.html.twig',[
             'product'=> $products
         ]);
     }

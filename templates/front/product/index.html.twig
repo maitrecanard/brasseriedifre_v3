@@ -1,4 +1,4 @@
-{% extends 'front/base.html.twig' %}
+{% extends 'front/product.html.twig' %}
 
 {% block body %}
 
@@ -11,9 +11,9 @@
                 
                     {% for product in products %}
                     <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
                         <div class="info-bieres">
-                            <h5>{{ product.name }}</h5>
+                            <h5><a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}">{{ product.name }}</a></h5>
                             {% for price in product.prixes %}
                                 {% if price.prix != null %}
                                     <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
@@ -33,9 +33,9 @@
                 
                     {% for product in productsPeriod %}
                         <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
                         <div class="info-bieres">
-                            <h5>{{ product.name }}</h5>
+                            <h5><a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}">{{ product.name }}</a></h5>
                             {% for price in product.prixes %}
                                 {% if price.prix != null %}
                                     <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} € </b></small>
@@ -73,7 +73,7 @@
 
         {% for product in goodies %}
         <article>
-                <a href="./bieresdetails.html"><img src="./assets/images/portecle.jpg"  alt=""></a>
+                <img src="./assets/images/portecle.jpg"  alt="">
                 <div class="info-bieres">
             <h5>{{ product.name }}</h5>
             {% for price in product.prixes %}
