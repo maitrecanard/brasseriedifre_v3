@@ -2,24 +2,31 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Products;
 use App\Repository\ProductsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BeerController extends AbstractController
+class ProductController extends AbstractController
 {
     #[Route('/bieres', name: 'app_front_beer')]
     public function index(ProductsRepository $productsRepository): Response
     {
 
-        return $this->render('front/beer/index.html.twig', [
+        return $this->render('front/product/index.html.twig', [
             'products' => $productsRepository->findBy(['active'=>1, 'period'=> NULL], ['id' => 'DESC']),
             'productsPeriod' => $productsRepository->findBy(['active'=>1, 'period'=> !NULL], ['id' => 'DESC']),
             'productFut' => $productsRepository->findBy(['active'=>1, 'name'=> 'Fût']),
-            'goodies' => $productsRepository->findBy(['active'=>1, 'period'=> !NULL, 'degre'=> !NULL], ['id' => 'DESC']),
+            'goodies' => $productsRepository->findBy(['active'=>1, 'period'=> NULL, 'degre'=> NULL], ['id' => 'DESC']),
         ]);
     }
 
-   // #[Route('/b')]
+    #[Route('/biere/{id}/{slug}', name:'app_details_beer', methods:'GET')]
+    public function productDetail(Products $products)
+    {
+        return $this->render('front/beer/show.html.twig',[
+            'product'=> $products
+        ]);
+    }
 }
