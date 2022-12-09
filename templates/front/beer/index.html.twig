@@ -1,0 +1,25 @@
+{% extends 'front/base.html.twig' %}
+
+{% block body %}
+
+        {% for product in products %}
+            {{ product.name }}
+            {% for price in product.prixes %}
+                {% if price.prix != null %}
+                    {{ price.quantity.quantity }}
+                    {{ price.prix }}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% for product in productsPeriod %}
+            {{ product.name }}
+            {% for price in product.prixes %}
+                {% if price.prix != null %}
+                    {{ price.quantity.quantity }}
+                    {{ price.prix }}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+{% endblock %}
