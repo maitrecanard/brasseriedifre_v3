@@ -17,15 +17,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Subtitle</th>
+                <th>Titre</th>
                 <td>{{ page.subtitle }}</td>
             </tr>
             <tr>
-                <th>Content</th>
+                <th>Contenu</th>
                 <td>{{ page.content|raw }}</td>
             </tr>
             <tr>
-                <th>Mise à jour</th>
+                <th>Dernière mise à jour</th>
                 <td>{{ page.updatedAt ? page.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
         </tbody>
