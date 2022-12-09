@@ -11,9 +11,9 @@
                 
                     {% for product in products %}
                     <article>
-                        <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
+                        <a href="{{ path('app_count_beer', {'id':product.id}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
                         <div class="info-bieres">
-                            <h5><a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}">{{ product.name }}</a></h5>
+                            <h5><a href="{{ path('app_count_beer', {'id':product.id}) }}">{{ product.name }}</a></h5>
                             {% for price in product.prixes %}
                                 {% if price.prix != null %}
                                     <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>

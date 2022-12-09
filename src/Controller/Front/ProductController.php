@@ -22,7 +22,20 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/biere/{id}/{slug}', name:'app_details_beer', methods:'GET')]
+    #[Route('/biere/{id}', name:'app_count_beer', methods:'GET')]
+    public function countBeer(Products $products, ProductsRepository $productsRepository)
+    {
+        $view = $productsRepository->find($products);
+
+        $count = $view->getVue() + 1;
+
+        $products->setVue($count);
+        $productsRepository->add($products, true);
+
+        return $this->redirectToRoute('details_beer', ['id'=>$products->getId(), 'slug'=>$products->getSlug()]);
+    }
+
+    #[Route('/biere/{id}/{slug}', name:'details_beer', methods:'GET')]
     public function productDetail(Products $products)
     {
         return $this->render('front/product/show.html.twig',[

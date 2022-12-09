@@ -1,4 +1,187 @@
-{% extends 'front/product.html.twig' %}
+{% extends 'front/productDetails.html.twig' %}
 {% block body %}
+    <section class="bloc-bieres">
+        
+    
 
+                <h1>{{ product.name }}</h1>
+                <article class="presentation-bieres-details" >
+
+        
+                  
+    
+                        <img src="{{ asset('assets/images/' ~ product.image )}}"  alt="{{ product.name }}">
+                        <div class="info-bieres-details">
+                            <!--<h5>Nom de la bière</h5>-->
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut illo, sed vel animi iure dolor cum excepturi officia molestiae laboriosam nesciunt amet eaque velit obcaecati perspiciatis, mollitia rerum? Excepturi, libero.</p>
+                            <p>Description : Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit obcaecati commodi maxime dolor dolores quisquam harum culpa inventore aliquam, aperiam voluptate assumenda impedit? Quis minus molestias rerum porro, recusandae rem.</p>
+                            <div class="bottom-information-details">
+                                <div class="bitterness top">
+                                    <div class="bitterness-title">Force de l'amertume </div>
+                                    <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                                </div>
+                                <div class="bitterness">
+                                    <div class="bitterness-title">Période de production : </div>
+                                    <div class="bitterness-note">Octobre</div>
+                                </div>
+                                
+                                <table class="table-biere">
+                                <thead class="thead-biere">
+
+                                    <tr>
+                                        <th>Format bouteille</th>
+                                        <th>Prix</th>
+                                       <!-- <th>Votre sélection</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> 
+                                            <b>33 cl</b> </td>
+                                        <td>  2 €</td>
+                                       <!-- <td>
+                                            <div class="selector">
+                                                <div class="less"><button>-</button></div>
+                                                <div class="selector-info"></div>
+                                                <div class="more"><button>+</button></div>
+                                            </div>
+                                        </td>-->
+                                        
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                            <b>33 cl</b> </td>
+                                        <td>  2 €</td>
+                                        <!-- <td>
+                                            <div class="selector">
+                                                <div class="less"><button>-</button></div>
+                                                <div class="selector-info"></div>
+                                                <div class="more"><button>+</button></div>
+                                            </div>
+                                        </td>-->
+                                        
+                                       
+                                    </tr>
+                                   
+
+                                
+                                </tbody>
+                            </table>
+                            
+                            </div>
+                            
+                            
+                        </div>
+                    
+                        
+                </article>
+                <div class="inline"></div>
+        </section>
+                
+                
+            <section class="bloc-bieres ">
+                <h2>Nous vous proposons également</h2>
+                <div class="full-bieres">
+                  
+
+        
+                    <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>Nom de la bière</h5>
+                            <p>Brune, 15C irish extra stout</p>
+                            <small class="price"><b>33 cl | 2,80 €</b></small>
+                            <small class="price"><b>75 cl | 6,20 €</b></small>
+                            <small class="price"><b>+ Futs</b></small>
+                            
+
+                        </div>
+                    </article>
+                    <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>Nom de la bière</h5>
+                            <p>Brune, 15C irish extra stout</p>
+                            <small class="price"><b>33 cl | 2,80 €</b></small>
+                            <small class="price"><b>75 cl | 6,20 €</b></small>
+                            <small class="price"><b>+ Futs</b></small>
+
+                        </div>
+                    </article>
+                    <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>Nom de la bière</h5>
+                            <p>Brune, 15C irish extra stout</p>
+                            <small class="price"><b>33 cl | 2,80 €</b></small>
+                            <small class="price"><b>75 cl | 6,20 €</b></small>
+                            <small class="price"><b>+ Futs</b></small>
+
+                        </div>
+                    </article>
+                    <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>Nom de la bière</h5>
+                            <p>Brune, 15C irish extra stout</p>
+                            <small class="price"><b>33 cl | 2,80 €</b></small>
+                            <small class="price"><b>75 cl | 6,20 €</b></small>
+                            <small class="price"><b>+ Futs</b></small>
+
+                        </div>
+                    </article>
+                
+             
+        
+           
+             </div>
+    
+        
+             <div class="inline"></div>
+    
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les goodies Difré</h2>
+        <div class="full-bieres">
+
+            <article>
+                <a href="./bieresdetails.html"><img src="./assets/images/portecle.jpg"  alt=""></a>
+                <div class="info-bieres">
+                    <h5>Porte cle</h5>
+                    
+                    <small class="price"><b>4 €</b></small>
+
+                </div>
+            </article>
+            <article>
+                <a href="./bieresdetails.html"><img src="./assets/images/verre.jpg"  alt=""></a>
+                <div class="info-bieres">
+                    <h5>Verre</h5>
+                   
+                    <small class="price"><b>8 €</b></small>
+
+
+                </div>
+            </article>
+            <article>
+                <a href="./bieresdetails.html"><img src="./assets/images/decap.jpg"  alt=""></a>
+                <div class="info-bieres">
+                    <h5>Décapsuleur</h5>
+                   
+                    <small class="price"><b>2,50 €</b></small>
+               
+
+                </div>
+            </article>
+        
+     
+
+   
+     </div>
+
+
+
+
+</section>
 {% endblock %}
