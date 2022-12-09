@@ -16,6 +16,7 @@ class BeerController extends AbstractController
         return $this->render('front/beer/index.html.twig', [
             'products' => $productsRepository->findBy(['active'=>1, 'period'=> NULL], ['id' => 'DESC']),
             'productsPeriod' => $productsRepository->findBy(['active'=>1, 'period'=> !NULL], ['id' => 'DESC']),
+            'productFut' => $productsRepository->findBy(['active'=>1, 'name'=> 'Fût']),
             'goodies' => $productsRepository->findBy(['active'=>1, 'period'=> !NULL, 'degre'=> !NULL], ['id' => 'DESC']),
         ]);
     }

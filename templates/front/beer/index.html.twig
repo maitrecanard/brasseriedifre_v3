@@ -2,8 +2,80 @@
 
 {% block body %}
 
-        {% for product in products %}
-            {{ product.name }}
+    <h1>Les bières à Difré</h1>
+   
+    
+    <section class="bloc-bieres">
+        <h2>Blonde, Brune, Ambrée...</h2>
+            <div class="full-bieres">   
+                
+                    {% for product in products %}
+                    <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>{{ product.name }}</h5>
+                            {% for price in product.prixes %}
+                                {% if price.prix != null %}
+                                    <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="price"><b>+ Futs</b></small>
+                        </div>
+                    </article>
+                    {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les temporaires</h2>
+            <div class="full-bieres">
+                
+                    {% for product in productsPeriod %}
+                        <article>
+                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                            <h5>{{ product.name }}</h5>
+                            {% for price in product.prixes %}
+                                {% if price.prix != null %}
+                                    <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} € </b></small>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="price"><b>+ Futs</b></small>
+                        </div>
+                        </article>
+                    {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Nos Fûts et Tireuse</h2>
+            <div class="full-bieres">
+               
+                    {% for product in productFut %}
+                     <article>
+                     <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
+                        <div class="info-bieres">
+                        <h5>{{ product.name }}</h5>
+                        <small class="price"><b>À partir de 30 €</b></small>
+                        <small class="price"><b>+ Tireuse(Optionnel)</b></small>
+                    </article>
+                    {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les goodies Difré</h2>
+        <div class="full-bieres">
+
+
+        {% for product in goodies %}
+        <article>
+                <a href="./bieresdetails.html"><img src="./assets/images/portecle.jpg"  alt=""></a>
+                <div class="info-bieres">
+            <h5>{{ product.name }}</h5>
             {% for price in product.prixes %}
                 {% if price.prix != null %}
                     {{ price.quantity.quantity }}
@@ -11,15 +83,5 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
-
-        {% for product in productsPeriod %}
-            {{ product.name }}
-            {% for price in product.prixes %}
-                {% if price.prix != null %}
-                    {{ price.quantity.quantity }}
-                    {{ price.prix }}
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
-
+        </div>
 {% endblock %}
