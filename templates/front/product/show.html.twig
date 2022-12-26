@@ -13,59 +13,69 @@
                         <img src="{{ asset('assets/images/' ~ product.image )}}"  alt="{{ product.name }}">
                         <div class="info-bieres-details">
                             <!--<h5>Nom de la bière</h5>-->
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut illo, sed vel animi iure dolor cum excepturi officia molestiae laboriosam nesciunt amet eaque velit obcaecati perspiciatis, mollitia rerum? Excepturi, libero.</p>
-                            <p>Description : Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit obcaecati commodi maxime dolor dolores quisquam harum culpa inventore aliquam, aperiam voluptate assumenda impedit? Quis minus molestias rerum porro, recusandae rem.</p>
+                            <p>{{ product.content }}</p>
+                            <p>Description : {{ product.description }}</p>
+                            <p>{{ product.subtitle }}</p>
                             <div class="bottom-information-details">
-                                <div class="bitterness top">
-                                    <div class="bitterness-title">Force de l'amertume </div>
-                                    <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
-                                </div>
-                                <div class="bitterness">
-                                    <div class="bitterness-title">Période de production : </div>
-                                    <div class="bitterness-note">Octobre</div>
-                                </div>
+                                {% if product.name != 'Fût' %}
+                                    <div class="bitterness top">
+                                        <div class="bitterness-title">Force de l'amertume </div>
+                                        {% if product.note == 1 %}
+                                            <div class="bitterness-note"><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                                        {% elseif product.note == 2 %}
+                                            <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                                        {% elseif product.note == 3 %}
+                                            <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                                        {% elseif product.note == 4 %}
+                                            <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                                        {% else %}
+                                            <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                        {% endif %}     
+                                    </div>
+                                    <div class="bitterness">
+                                        <div class="bitterness-title">Période de production : </div>
+                                        <div class="bitterness-note">
+                                            {% if product.period == NULL %}
+                                                Toute l'année
+                                            {% else %}
+                                                {{ product.period }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 
+                                    <div class="bitterness">
+                                        <div class="bitterness-title">Alc : </div>
+                                        <div class="bitterness-note">
+                                            {{ product.degre }} % Vol
+                                        </div>
+                                    </div>
+                                    <div class="bitterness">
+                                        <div class="bitterness-title">température de dégustation : </div>
+                                        <div class="bitterness-note">
+                                            {{ product.temp }} °C
+                                        </div>
+                                    </div>
+                                {% endif %}
                                 <table class="table-biere">
                                 <thead class="thead-biere">
 
                                     <tr>
                                         <th>Format bouteille</th>
                                         <th>Prix</th>
-                                       <!-- <th>Votre sélection</th> -->
+                                   
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td> 
-                                            <b>33 cl</b> </td>
-                                        <td>  2 €</td>
-                                       <!-- <td>
-                                            <div class="selector">
-                                                <div class="less"><button>-</button></div>
-                                                <div class="selector-info"></div>
-                                                <div class="more"><button>+</button></div>
-                                            </div>
-                                        </td>-->
-                                        
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td> 
-                                            <b>33 cl</b> </td>
-                                        <td>  2 €</td>
-                                        <!-- <td>
-                                            <div class="selector">
-                                                <div class="less"><button>-</button></div>
-                                                <div class="selector-info"></div>
-                                                <div class="more"><button>+</button></div>
-                                            </div>
-                                        </td>-->
-                                        
-                                       
-                                    </tr>
-                                   
-
-                                
+                                    {% for price in product.prixes %}
+                                        {% if price.prix != null %}
+                                            <tr>
+                                                <td> 
+                                                    <b>{{ price.quantity.quantity }} cl</b> </td>
+                                                <td>  {{ price.prix }} €</td>  
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    
                                 </tbody>
                             </table>
                             
@@ -83,58 +93,21 @@
             <section class="bloc-bieres ">
                 <h2>Nous vous proposons également</h2>
                 <div class="full-bieres">
-                  
-
-        
-                    <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
-                        <div class="info-bieres">
-                            <h5>Nom de la bière</h5>
-                            <p>Brune, 15C irish extra stout</p>
-                            <small class="price"><b>33 cl | 2,80 €</b></small>
-                            <small class="price"><b>75 cl | 6,20 €</b></small>
-                            <small class="price"><b>+ Futs</b></small>
-                            
-
-                        </div>
-                    </article>
-                    <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
-                        <div class="info-bieres">
-                            <h5>Nom de la bière</h5>
-                            <p>Brune, 15C irish extra stout</p>
-                            <small class="price"><b>33 cl | 2,80 €</b></small>
-                            <small class="price"><b>75 cl | 6,20 €</b></small>
-                            <small class="price"><b>+ Futs</b></small>
-
-                        </div>
-                    </article>
-                    <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
-                        <div class="info-bieres">
-                            <h5>Nom de la bière</h5>
-                            <p>Brune, 15C irish extra stout</p>
-                            <small class="price"><b>33 cl | 2,80 €</b></small>
-                            <small class="price"><b>75 cl | 6,20 €</b></small>
-                            <small class="price"><b>+ Futs</b></small>
-
-                        </div>
-                    </article>
-                    <article>
-                        <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
-                        <div class="info-bieres">
-                            <h5>Nom de la bière</h5>
-                            <p>Brune, 15C irish extra stout</p>
-                            <small class="price"><b>33 cl | 2,80 €</b></small>
-                            <small class="price"><b>75 cl | 6,20 €</b></small>
-                            <small class="price"><b>+ Futs</b></small>
-
-                        </div>
-                    </article>
-                
-             
-        
-           
+                    {% for product in otherProducts %}
+                        <article>
+                            <a href="{{ path('app_count_beer', {'id':product.id}) }}"><img src="{{ asset('assets/images/' ~ product.image )}}"  alt="{{ product.name }}"></a>
+                            <div class="info-bieres">
+                                <h5><a href="{{ path('app_count_beer', {'id':product.id}) }}">{{ product.name }}</a></h5>
+                                <p>{{ product.type }}</p>
+                                 {% for price in product.prixes %}
+                                    {% if price.prix != null %}
+                                        <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
+                                    {% endif %}
+                                {% endfor %}
+                                <small class="price"><b>+ Futs</b></small>
+                            </div>
+                        </article>
+                    {% endfor %}
              </div>
     
         
@@ -143,45 +116,21 @@
     </section>
     <section class="bloc-bieres ">
         <h2>Les goodies Difré</h2>
-        <div class="full-bieres">
-
-            <article>
-                <a href="./bieresdetails.html"><img src="./assets/images/portecle.jpg"  alt=""></a>
-                <div class="info-bieres">
-                    <h5>Porte cle</h5>
-                    
-                    <small class="price"><b>4 €</b></small>
-
-                </div>
-            </article>
-            <article>
-                <a href="./bieresdetails.html"><img src="./assets/images/verre.jpg"  alt=""></a>
-                <div class="info-bieres">
-                    <h5>Verre</h5>
-                   
-                    <small class="price"><b>8 €</b></small>
-
-
-                </div>
-            </article>
-            <article>
-                <a href="./bieresdetails.html"><img src="./assets/images/decap.jpg"  alt=""></a>
-                <div class="info-bieres">
-                    <h5>Décapsuleur</h5>
-                   
-                    <small class="price"><b>2,50 €</b></small>
-               
-
-                </div>
-            </article>
-        
-     
-
-   
-     </div>
-
-
-
-
-</section>
+        <div class="full-bieres">  
+            {% for product in goodies %}
+                <article>
+                    <img src="./assets/images/portecle.jpg"  alt="">
+                    <div class="info-bieres">
+                        <h5>{{ product.name }}</h5>
+                        {% for price in product.prixes %}
+                            {% if price.prix != null %}
+                                {{ price.quantity.quantity }}
+                                {{ price.prix }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

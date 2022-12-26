@@ -14,6 +14,7 @@
                         <a href="{{ path('app_count_beer', {'id':product.id}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
                         <div class="info-bieres">
                             <h5><a href="{{ path('app_count_beer', {'id':product.id}) }}">{{ product.name }}</a></h5>
+                            <p>{{ product.type }}</p>
                             {% for price in product.prixes %}
                                 {% if price.prix != null %}
                                     <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
@@ -53,15 +54,15 @@
         <h2>Nos Fûts et Tireuse</h2>
             <div class="full-bieres">
                
-                    {% for product in productFut %}
-                     <article>
-                     <a href="./bieresdetails.html"><img src="./assets/images/brune.jpg"  alt=""></a>
-                        <div class="info-bieres">
-                        <h5>{{ product.name }}</h5>
-                        <small class="price"><b>À partir de 30 €</b></small>
-                        <small class="price"><b>+ Tireuse(Optionnel)</b></small>
-                    </article>
-                    {% endfor %}
+                {% for product in productFut %}
+                 <article>
+                 <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
+                    <div class="info-bieres">
+                    <h5>{{ product.name }}</h5>
+                    <small class="price"><b>À partir de 30 €</b></small>
+                    <small class="price"><b>+ Tireuse(Optionnel)</b></small>
+                </article>
+                {% endfor %}
                 
             </div>
         <div class="inline"></div>
@@ -73,7 +74,7 @@
 
         {% for product in goodies %}
         <article>
-                <img src="./assets/images/portecle.jpg"  alt="">
+                <img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}">
                 <div class="info-bieres">
             <h5>{{ product.name }}</h5>
             {% for price in product.prixes %}
@@ -82,6 +83,8 @@
                     {{ price.prix }}
                 {% endif %}
             {% endfor %}
+            </div>
+        </article>
         {% endfor %}
         </div>
 {% endblock %}

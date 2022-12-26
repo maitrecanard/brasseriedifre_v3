@@ -36,10 +36,12 @@ class ProductController extends AbstractController
     }
 
     #[Route('/biere/{id}/{slug}', name:'details_beer', methods:'GET')]
-    public function productDetail(Products $products)
+    public function productDetail(Products $products, ProductsRepository $productsRepository)
     {
         return $this->render('front/product/show.html.twig',[
-            'product'=> $products
+            'product'=> $products,
+            'otherProducts' => $productsRepository->findByOtherProduct($products),
+            'goodies' => $productsRepository->findBy(['active'=>1, 'period'=> NULL, 'degre'=> NULL], ['id' => 'DESC']),
         ]);
     }
 }
