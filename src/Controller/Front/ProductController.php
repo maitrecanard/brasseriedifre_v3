@@ -36,8 +36,15 @@ class ProductController extends AbstractController
     }
 
     #[Route('/biere/{id}/{slug}', name:'details_beer', methods:'GET')]
-    public function productDetail(Products $products, ProductsRepository $productsRepository)
+    public function productDetail(Products $products, string $slug, ProductsRepository $productsRepository)
     {
+        if($slug !== $products->getSlug()) {
+            return $this->redirectToRoute('details_beer', [
+                'id' => $products->getId(),
+                'slug' => $products->getSlug()
+            ]);
+        }
+        
         return $this->render('front/product/show.html.twig',[
             'product'=> $products,
             'otherProducts' => $productsRepository->findByOtherProduct($products),
