@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+
+<title>Installation</title>
+
+{% block body %}
+ {{ form_start(form) }}
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+ {{ form_end(form) }}
+{% endblock %}
