@@ -27,7 +27,7 @@ class VerifAgeController extends AbstractController
             if($age != 1)
             {
                // $error = 'Votre age ne permet pas l\'accès au site';
-                return $this->redirectToRoute('front_verif_age', [], Response::HTTP_SEE_OTHER);
+                return $this->redirect('https://solidarites-sante.gouv.fr/IMG/pdf/Vente_sur_place_HD.pdf');
 
             } else {
                  
