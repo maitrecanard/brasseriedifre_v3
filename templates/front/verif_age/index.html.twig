@@ -62,15 +62,19 @@
             display: none;
         }
     </style>
-    <script src="{{ asset('assets/js/loader.bundle.js')}}"></script>
-<script defer src="{{ asset('assets/js/main.bundle.js')}}"></script></head>
+    {#<script src="{{ asset('assets/js/loader.bundle.js')}}"></script>#}
+<script defer src="{{ asset('assets/js/main.bundle.js')}}"></script>
+<script defer src="{{ asset('assets/js/components/loader.js')}}"></script>
+<script defer src="{{ asset('assets/js/app.js')}}"></script>
+
+</head>
 <body>  
    
-    <!--<div class="loader-container">
+    <div class="loader-container">
         <div class="loader">
         </div>
         <img class="loader-logo" src="../assets/images/logo_loader.png" alt="logo">
-    </div>-->
+    </div>
     
     <article>
 
@@ -81,10 +85,12 @@
             </p>
             <p>L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
             <div class="age">
-                <form action="">
+                <form action="/verification/age" method="post">
+                    <input type="hidden" name="age" value="1">
                     <button class="green" >+18</button>
                 </form>
-                <form action="">
+                <form action="/verification/age" method="post">
+                    <input type="hidden" name="age" value="0">
                     <button class="red">-18</button>
                 </form>
             </div>
