@@ -4,9 +4,11 @@ const app = {
 
     init: function() {
         
+        loader.init();
         mail.init();
         map.init();
         app.httpHeaders.append("Content-Type", "application/json");
+        
 
     }
 

@@ -22,23 +22,12 @@ class VerifAgeController extends AbstractController
         //https://www.bilendi.tech/index.php?post/2021/03/22/Validation-d-un-formulaire-Symfony-au-sein-d-un-formulaire-DevExtreme
         if ($request->isMethod('POST'))
         {
-            $year = $request->request->get('year');
-            $month = $request->request->get('month');
-            $day = $request->request->get('day');
+            $age = $request->request->get('age');
 
-            $date = $year.''.$month.''.$day;
-
-            $now = new \DateTime();
-            $bornDate = new \DateTimeImmutable($date);
-
-            $compare = $now->diff($bornDate);
-
-            $age = $compare->format('%y');
-
-            if($age < 18)
+            if($age != 1)
             {
                // $error = 'Votre age ne permet pas l\'accès au site';
-                return $this->redirectToRoute('front_verif_age', [], Response::HTTP_SEE_OTHER);
+                return $this->redirect('https://solidarites-sante.gouv.fr/IMG/pdf/Vente_sur_place_HD.pdf');
 
             } else {
                  
