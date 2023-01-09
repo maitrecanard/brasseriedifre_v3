@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,79 +72,24 @@
         <img class="loader-logo" src="../assets/images/logo_loader.png" alt="logo">
     </div>-->
     
-    <section>
+    <article>
 
-{% block body %}
-
-     <form action="{{ path('front_verif_age')}}" method="POST">
-            <img width="200px" src="{{ asset('assets/content/pictures/logo2.png')}}" alt="">
-            <article>
-            <p style="color:white;">Pour pouvoir visiter notre site, vous devez être en âge d'acheter et de
-                consommer de l'alcool conformément à la legislation en vigueur.
+        {% block body %}
+            <img height="350px" src="{{ asset('assets/images/logo.png') }}" alt="Brasserie Difré">
+            <p>Pour pouvoir visiter notre site, vous devez être en âge d'acheter et de
+                    consommer de l'alcool conformément à la legislation en vigueur.
             </p>
-            <p style="color:white;">L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
-        </article>
-            <label for="date">Votre date de naissance</label>
-                   
-             <div class="select-date">
-            <select class="date" name="day" id="">
-                <option value="" disabled selected>Jour</option>
-                <option value="01">1</option>
-                <option value="02">2</option>
-                <option value="03">3</option>
-                <option value="04">4</option>
-                <option value="05">5</option>
-                <option value="06">6</option>
-                <option value="07">7</option>
-                <option value="08">8</option>
-                <option value="09">9</option>
-                <option value="10">10</option>
-                <option value="10">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-            </select>
-            <select class="date" name="month" id="">
-                <option value="" disabled selected>Mois</option>
-                <option value="01">Janvier</option>
-                <option value="02">Février</option>
-                <option value="03">Mars</option>
-                <option value="04">Avril</option>
-                <option value="05">Mai</option>
-                <option value="06">Juin</option>
-                <option value="07">Juillet</option>
-                <option value="08">Août</option>
-                <option value="09">Septembre</option>
-                <option value="10">Octobre</option>
-                <option value="11">Novembre</option>
-                <option value="12">Décembre</option>
-            </select>
-            <input style="font-size:1.5rem;color:black;" class="date date-year" name="year" placeholder="Année" size="4" min="1930" max="2035" type="number" maxlength="4">
-        </div>
-            <button type="submit">Je confirme ma date</button>
-        </form>
+            <p>L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
+            <div class="age">
+                <form action="">
+                    <button class="green" >+18</button>
+                </form>
+                <form action="">
+                    <button class="red">-18</button>
+                </form>
+            </div>
+        {% endblock %}
 
-        
-
-{% endblock %}
-
-  </section>
+  </article>
 </body>
 </html>
