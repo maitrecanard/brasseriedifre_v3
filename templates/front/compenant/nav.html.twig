@@ -1,0 +1,29 @@
+ {% block body %}
+    <div class="header-shadow">
+            <div class="header-nav">
+                
+                <div class="logo"><a href="{{ path('home') }}"><img src="{{ asset('assets/images/logo.png') }}" width="100px" alt=""></a></div>
+                <div class="header-menu">
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('home') }}">Accueil</a></li>
+                        <li><a href="{{ path('app_front_beer') }}">Les bières à Difré</a></li>
+                        <li><a href="#">Où sommes nous ?</a></li>
+                        <li><a href="#">Nous contacter</a></li>
+                    </ul> 
+                </nav>
+            </div>
+                <!--<div class="secondary-menu">
+                    <div class="login">Connexion</div>
+                    <div class="compte"><a href="./compte.html">Mon compte</a></div>
+                    <div class="panier"><a href="./panier.html">Mon panier</a></div>
+                </div>
+                <div class="connect">Connexion</div>-->
+                <div class="header-menu-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+        </div>
+        <div class="mobile"></div>  
+{% endblock %}

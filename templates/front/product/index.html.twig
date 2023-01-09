@@ -1,0 +1,90 @@
+{% extends 'front/product.html.twig' %}
+
+{% block body %}
+
+    <h1>Les bières à Difré</h1>
+   
+    
+    <section class="bloc-bieres">
+        <h2>Blonde, Brune, Ambrée...</h2>
+            <div class="full-bieres">   
+                
+                    {% for product in products %}
+                    <article>
+                        <a href="{{ path('app_count_beer', {'id':product.id}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
+                        <div class="info-bieres">
+                            <h5><a href="{{ path('app_count_beer', {'id':product.id}) }}">{{ product.name }}</a></h5>
+                            <p>{{ product.type }}</p>
+                            {% for price in product.prixes %}
+                                {% if price.prix != null %}
+                                    <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="price"><b>+ Futs</b></small>
+                        </div>
+                    </article>
+                    {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les temporaires</h2>
+            <div class="full-bieres">
+                
+                    {% for product in productsPeriod %}
+                        <article>
+                        <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
+                        <div class="info-bieres">
+                            <h5><a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}">{{ product.name }}</a></h5>
+                            {% for price in product.prixes %}
+                                {% if price.prix != null %}
+                                    <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} € </b></small>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="price"><b>+ Futs</b></small>
+                        </div>
+                        </article>
+                    {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Nos Fûts et Tireuse</h2>
+            <div class="full-bieres">
+               
+                {% for product in productFut %}
+                 <article>
+                 <a href="{{ path('app_details_beer', {'id':product.id, 'slug':product.slug}) }}"><img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}"></a>
+                    <div class="info-bieres">
+                    <h5>{{ product.name }}</h5>
+                    <small class="price"><b>À partir de 30 €</b></small>
+                    <small class="price"><b>+ Tireuse(Optionnel)</b></small>
+                </article>
+                {% endfor %}
+                
+            </div>
+        <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les goodies Difré</h2>
+        <div class="full-bieres">
+
+
+        {% for product in goodies %}
+        <article>
+                <img src="{{ asset('assets/images/' ~ product.image) }}"  alt="{{ product.name }}">
+                <div class="info-bieres">
+            <h5>{{ product.name }}</h5>
+            {% for price in product.prixes %}
+                {% if price.prix != null %}
+                    {{ price.quantity.quantity }}
+                    {{ price.prix }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        </article>
+        {% endfor %}
+        </div>
+{% endblock %}

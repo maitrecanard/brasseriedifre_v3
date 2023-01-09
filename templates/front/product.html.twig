@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    {% include 'front/compenant/head.html.twig' %}
+    <body>
+    <header>
+    <section class="ban-biere">
+            
+       {% include 'front/compenant/nav.html.twig' %}
+        
+        </section>
+       
+    </header>
+        <main>
+        {% block body %}
+        
+        {% endblock %}
+        </main>
+     {% include 'front/compenant/footer.html.twig' %}
+</body>
+</html>

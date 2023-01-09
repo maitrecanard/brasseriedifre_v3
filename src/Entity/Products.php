@@ -65,6 +65,15 @@ class Products
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $story = null;
+
+    #[ORM\Column(length: 8, nullable: true)]
+    private ?string $temp = null;
+
+    #[ORM\Column(length: 300, nullable: true)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->quantityPrixes = new ArrayCollection();
@@ -302,6 +311,42 @@ class Products
     public function setNote(?int $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getStory(): ?string
+    {
+        return $this->story;
+    }
+
+    public function setStory(?string $story): self
+    {
+        $this->story = $story;
+
+        return $this;
+    }
+
+    public function getTemp(): ?string
+    {
+        return $this->temp;
+    }
+
+    public function setTemp(?string $temp): self
+    {
+        $this->temp = $temp;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

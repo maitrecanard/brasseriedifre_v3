@@ -1,0 +1,117 @@
+{% extends 'front/productDetails.html.twig' %}
+{% block body %}
+    <section class="bloc-bieres">
+        <h1>{{ product.name }}</h1>
+        <article class="presentation-bieres-details" >
+            <img src="{{ asset('assets/images/' ~ product.image )}}"  alt="{{ product.name }}">
+            <div class="info-bieres-details">
+                <!--<h5>Nom de la bière</h5>-->
+                <p>{{ product.content }}</p>
+                <p>Description : {{ product.description }}</p>
+                <p>{{ product.subtitle }}</p>
+                <div class="bottom-information-details">
+                    {% if product.name != 'Fût' %}
+                        <div class="bitterness top">
+                            <div class="bitterness-title">Force de l'amertume </div>
+                            {% if product.note == 1 %}
+                                <div class="bitterness-note"><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                            {% elseif product.note == 2 %}
+                                <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                            {% elseif product.note == 3 %}
+                                <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                            {% elseif product.note == 4 %}
+                                <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                            {% else %}
+                                <div class="bitterness-note"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            {% endif %}     
+                        </div>
+                        <div class="bitterness">
+                            <div class="bitterness-title">Période de production : </div>
+                            <div class="bitterness-note">
+                                {% if product.period == NULL %}
+                                    Toute l'année
+                                {% else %}
+                                    {{ product.period }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    
+                        <div class="bitterness">
+                            <div class="bitterness-title">Alc : </div>
+                            <div class="bitterness-note">
+                                {{ product.degre }} % Vol
+                            </div>
+                        </div>
+                        <div class="bitterness">
+                            <div class="bitterness-title">température de dégustation : </div>
+                            <div class="bitterness-note">
+                                {{ product.temp }} °C
+                            </div>
+                        </div>
+                    {% endif %}
+                    <table class="table-biere">
+                    <thead class="thead-biere">
+                        <tr>
+                            <th>Format bouteille</th>
+                            <th>Prix</th>
+                       
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for price in product.prixes %}
+                            {% if price.prix != null %}
+                                <tr>
+                                    <td> 
+                                        <b>{{ price.quantity.quantity }} cl</b> </td>
+                                    <td>  {{ price.prix }} €</td>  
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div> 
+            </div>
+        </article>
+        <div class="inline"></div>
+    </section>     
+    <section class="bloc-bieres ">
+        <h2>Nous vous proposons également</h2>
+        <div class="full-bieres">
+            {% for product in otherProducts %}
+                <article>
+                    <a href="{{ path('app_count_beer', {'id':product.id}) }}"><img src="{{ asset('assets/images/' ~ product.image )}}"  alt="{{ product.name }}"></a>
+                    <div class="info-bieres">
+                        <h5><a href="{{ path('app_count_beer', {'id':product.id}) }}">{{ product.name }}</a></h5>
+                        <p>{{ product.type }}</p>
+                         {% for price in product.prixes %}
+                            {% if price.prix != null %}
+                                <small class="price"><b>{{ price.quantity.quantity }} cl | {{ price.prix }} €</b></small>
+                            {% endif %}
+                        {% endfor %}
+                        <small class="price"><b>+ Futs</b></small>
+                    </div>
+                </article>
+            {% endfor %}
+     </div>
+    <div class="inline"></div>
+    </section>
+    <section class="bloc-bieres ">
+        <h2>Les goodies Difré</h2>
+        <div class="full-bieres">  
+            {% for product in goodies %}
+                <article>
+                    <img src="./assets/images/portecle.jpg"  alt="">
+                    <div class="info-bieres">
+                        <h5>{{ product.name }}</h5>
+                        {% for price in product.prixes %}
+                            {% if price.prix != null %}
+                                {{ price.quantity.quantity }}
+                                {{ price.prix }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
