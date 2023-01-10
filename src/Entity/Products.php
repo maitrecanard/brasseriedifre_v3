@@ -25,7 +25,7 @@ class Products
     #[ORM\Column(length: 150)]
     private ?string $slug = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT,nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 300)]
@@ -34,7 +34,7 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $degre = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT,nullable: true)]
     private ?string $content = null;
 
     #[ORM\Column(nullable: true)]
@@ -128,7 +128,7 @@ class Products
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -164,7 +164,7 @@ class Products
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
