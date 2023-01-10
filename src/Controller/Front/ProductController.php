@@ -15,10 +15,10 @@ class ProductController extends AbstractController
     {
 
         return $this->render('front/product/index.html.twig', [
-            'products' => $productsRepository->findBy(['active'=>1, 'period'=> NULL], ['id' => 'DESC']),
-            'productsPeriod' => $productsRepository->findBy(['active'=>1, 'period'=> !NULL], ['id' => 'DESC']),
-            'productFut' => $productsRepository->findBy(['active'=>1, 'name'=> 'Fût']),
-            'goodies' => $productsRepository->findBy(['active'=>1, 'period'=> NULL, 'degre'=> NULL], ['id' => 'DESC']),
+            'products' => $productsRepository->findBy(['active'=>1, 'categorie'=> 1], ['id' => 'DESC']),
+            'productsPeriod' => $productsRepository->findBy(['active'=>1, 'categorie'=> 2], ['id' => 'DESC']),
+            'productFut' => $productsRepository->findBy(['active'=>1, 'categorie'=> 3]),
+            'goodies' => $productsRepository->findBy(['active'=>1, 'categorie'=> 4], ['id' => 'DESC']),
         ]);
     }
 
